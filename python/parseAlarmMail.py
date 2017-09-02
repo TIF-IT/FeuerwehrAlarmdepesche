@@ -8,7 +8,7 @@ from email.parser import FeedParser
 import alarmdepescheconfig as config
 from bs4 import BeautifulSoup
 import MySQLdb
-
+import time
 
 # https://stackoverflow.com/questions/25318012/how-to-connect-with-python-imap4-ssl-and-self-signed-server-ssl-cert
 
@@ -131,13 +131,25 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
   db.close()
 
 def runCheckup ():
+  print "Check for mail"
   lastMailID, mailBody = getLastMail ()
   dicAlarmdepesche    = interpretHTMLAlarmdepesche ( mailBody )
   sqlAlarmdepesche     = createSQLFromDict ( lastMailID, dicAlarmdepesche )
   insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche )
 
-runCheckup ()
-#import asyncio
+while True:
+  runCheckup ()
+  time.sleep(int(config.imap['checkIntervall']))
+
+#loop = asyncio.get_event_loop()
+
+# Schedule the first call to display_date()
+#end_time = loop.time() + 5.0
+#loop.call_soon(loop, loop)
+
+# Blocking call interrupted by loop.stop()
+#loop.run_forever()
+#loop.close()
 
 
 
