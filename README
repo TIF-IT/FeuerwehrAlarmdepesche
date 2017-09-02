@@ -3,6 +3,13 @@
 
   In this project i write a interpreter for the Alarmdepesche of german fire departments like Thuringia.
 
+# Installation
+
+     $ yum install python-pip
+     $ pip install --upgrade pip
+     $ pip install imaplib
+     $ pip install beautifulsoup4
+
 # Create a config file
 
   For the imap login it is usefule to create a file with the name 'alarmdepescheconfig.py'.
