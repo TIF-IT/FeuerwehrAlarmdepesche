@@ -7,6 +7,8 @@ from HTMLParser import HTMLParser
 from email.parser import FeedParser
 import alarmdepescheconfig as config
 from bs4 import BeautifulSoup
+import MySQLdb
+
 
 # https://stackoverflow.com/questions/25318012/how-to-connect-with-python-imap4-ssl-and-self-signed-server-ssl-cert
 
@@ -41,7 +43,7 @@ def getLastMail ():
 # =====================================================
 
 def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
-  soup = BeautifulSoup(mailBody, "lxml")
+  soup = BeautifulSoup(htmlAlarmdepesche, "lxml")
   table = soup.find("table", attrs={})
 
   datasets = []
@@ -73,7 +75,7 @@ def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
   for dataset in datasets:
     for alarmdepItem in availableAlarmdepesche:
       if dataset[0] == availableAlarmdepesche[alarmdepItem]:
-        foundAlarmdepesche[alarmdepItem] = dataset[1]
+        foundAlarmdepesche[alarmdepItem] = dataset[1].rstrip()
 
   #print foundAlarmdepesche
 
@@ -105,11 +107,37 @@ def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
 
   return sqlQuery
 
+def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
+  # config.mysql['host'] , user, passwd, dbName
+  # https://www.tutorialspoint.com/python/python_database_access.htm
+  db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
+  cursor = db.cursor()
+  try:
+    sqlStatement = "select id from Alarmdepesche where Einsatznummer='"+dicAlarmdepesche["Einsatznummer"]+"';"
+    #print "Select> "+sqlStatement
+    cursor.execute(sqlStatement)
+    results = cursor.fetchall()
+    #print results
+    row_count = cursor.rowcount
+    if row_count == 0:
+      cursor.execute(sqlAlarmdepesche)
+      db.commit()
+    else: 
+      print "The Alarmdepesche is already existing"
+  except:
+    print "!Error in mysql statement"
+    db.rollback()
 
-lastMailID, mailBody = getLastMail ()
-htmlAlarmdepesche = interpretHTMLAlarmdepesche ( mailBody )
-sqlAlarmdepesche = createSQLFromDict ( lastMailID, htmlAlarmdepesche )
+  db.close()
+
+def runCheckup ():
+  lastMailID, mailBody = getLastMail ()
+  dicAlarmdepesche    = interpretHTMLAlarmdepesche ( mailBody )
+  sqlAlarmdepesche     = createSQLFromDict ( lastMailID, dicAlarmdepesche )
+  insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche )
+
+runCheckup ()
+#import asyncio
 
 
-print ("> "+sqlAlarmdepesche)
 

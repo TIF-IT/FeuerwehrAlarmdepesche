@@ -10,6 +10,13 @@
      $ pip install imaplib
      $ pip install beautifulsoup4
 
+## Python full rest service
+     $ pip install flask
+
+## MySQL Datenbank
+     $ install python python-devel mysql-devel redhat-rpm-config gcc
+     $ pip install MySQL-python
+
 # Create a config file
 
   For the imap login it is usefule to create a file with the name 'alarmdepescheconfig.py'.
@@ -22,10 +29,16 @@
          'passwd': 'XXXXX',
          'mailBox': 'INBOX'}
 
+     mysql = { 'host'   : 'localhost'
+         , 'user'   : 'root'
+         , 'passwd' : ''
+         }
+
 # Create used database shema
 
   In my point i use a mysql db.
 
-     > create table Alarmdepesche (id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, dbIN TIMESTAMP DEFAULT CURRENT_TIMESTAMP, messageID BIGINT UNSIGNED, Einsatzstichwort VARCHAR(512), AlarmiertesEinsatzmittel VARCHAR(512), Sondersignal VARCHAR(512), Einsatzbeginn VARCHAR(512), Einsatznummer VARCHAR(512), Objekt VARCHAR(512), Objekttyp VARCHAR(512), StrasseHausnummer VARCHAR(512), Segment VARCHAR(512), PLZOrt VARCHAR(512), Region VARCHAR(512), Info VARCHAR(512), Name VARCHAR(512), Zusatz VARCHAR(512), PRIMARY KEY (id));
+     mysql> create database FeuerwehrNotifications;
+     mysql> create table Alarmdepesche (id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, dbIN TIMESTAMP DEFAULT CURRENT_TIMESTAMP, messageID BIGINT UNSIGNED, Einsatzstichwort VARCHAR(512), AlarmiertesEinsatzmittel VARCHAR(512), Sondersignal VARCHAR(512), Einsatzbeginn VARCHAR(512), Einsatznummer VARCHAR(512), Objekt VARCHAR(512), Objekttyp VARCHAR(512), StrasseHausnummer VARCHAR(512), Segment VARCHAR(512), PLZOrt VARCHAR(512), Region VARCHAR(512), Info VARCHAR(512), Name VARCHAR(512), Zusatz VARCHAR(512), PRIMARY KEY (id));
 
 
