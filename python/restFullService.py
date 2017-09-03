@@ -1,4 +1,5 @@
 #!flask/bin/python
+#-*-coding: utf-8 -*-
 from flask import Flask, jsonify
 import MySQLdb
 import alarmdepescheconfig as config
@@ -11,6 +12,7 @@ import sys
 reload(sys)
 sys.getdefaultencoding()
 
+print (sys.getfilesystemencoding())
 
 app = Flask(__name__)
 
@@ -35,7 +37,9 @@ cors = CORS(app, resources={r"/api/v1.0/Alarmdepesche": {"origins": "*"}})
 #]
 
 def strEncode (_in):
-  return _in.decode('utf-8', 'ignore')
+  #return _in.decode("iso-8859-1").encode("utf-8") #.decode('utf-8', 'ignore')
+  #return _in.decode("utf-8").encode("utf-8")
+  return _in#.decode('utf-8', 'ignore')
 
 
 @app.route('/api/v1.0/Alarmdepesche', methods=['GET'])
