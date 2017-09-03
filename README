@@ -26,6 +26,16 @@
      $ iptables -I INPUT 1 -p tcp -m tcp --dport 80 -m conntrack --ctstate NEW -j ACCEPT
      $ iptables -I INPUT 1 -p tcp -m tcp --dport 5000 -m conntrack --ctstate NEW -j ACCEPT
 
+## Web server
+
+     $ yum install -y httpd
+     $ systemctl enable httpd
+
+  In the Document space of the web server conig file add the header part for cros site requests:
+
+     Header set Access-Control-Allow-Origin "*"
+     Header set Access-Control-Allow-Headers: Content-Type
+
 # Create a config file
 
   For the imap login it is usefule to create a file with the name 'alarmdepescheconfig.py'.
@@ -45,23 +55,28 @@
 	 , 'dbName' : 'FeuerwehrNotifications'
          }
 
-# Create used database shema
+# Create used database schema
 
   In my point i use a mysql db.
 
      mysql> create database FeuerwehrNotifications CHARACTER SET utf8 COLLATE utf8_general_ci;
      mysql> create table Alarmdepesche (id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, dbIN TIMESTAMP DEFAULT CURRENT_TIMESTAMP, messageID BIGINT UNSIGNED, Einsatzstichwort VARCHAR(512), AlarmiertesEinsatzmittel VARCHAR(512), Sondersignal VARCHAR(512), Einsatzbeginn VARCHAR(512), Einsatznummer VARCHAR(512), Objekt VARCHAR(512), Objekttyp VARCHAR(512), StrasseHausnummer VARCHAR(512), Segment VARCHAR(512), PLZOrt VARCHAR(512), Region VARCHAR(512), Info VARCHAR(512), Name VARCHAR(512), Zusatz VARCHAR(512), PRIMARY KEY (id));
 
-     /etc/my.conf
+     $ vim /etc/my.conf
+     [mysqld]
      character-set-server=utf8
      collation-server=utf8_general_ci
      skip-character-set-client-handshake
+
+## Autostart database server
+
+     $ systemctl enable mysqld
 
 
 # Run 
 
      $ python python/parseAlarmMail.py
-     $ 
+     $ python python/restFullService.py
 
      $ rsync -avz ./html/* /var/www/html/Alarmdepesche/
 
