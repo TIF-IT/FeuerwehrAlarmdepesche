@@ -20,6 +20,10 @@
      $ yum install python python-devel mysql-devel redhat-rpm-config gcc
      $ pip install MySQL-python
 
+## Firewall
+
+     $ iptables -I INPUT 1 -p tcp -m tcp --dport 80 -m conntrack --ctstate NEW -j ACCEPT
+     $ iptables -I INPUT 1 -p tcp -m tcp --dport 5000 -m conntrack --ctstate NEW -j ACCEPT
 
 # Create a config file
 
