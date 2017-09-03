@@ -136,9 +136,10 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
 def runCheckup ():
   print ("Check for mail")
   lastMailID, mailBody = getLastMail ()
-  dicAlarmdepesche    = interpretHTMLAlarmdepesche ( mailBody )
-  sqlAlarmdepesche     = createSQLFromDict ( lastMailID, dicAlarmdepesche )
-  insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche )
+  if lastMailID != 0: 
+    dicAlarmdepesche    = interpretHTMLAlarmdepesche ( mailBody )
+    sqlAlarmdepesche     = createSQLFromDict ( lastMailID, dicAlarmdepesche )
+    insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche )
 
 while True:
   runCheckup ()
