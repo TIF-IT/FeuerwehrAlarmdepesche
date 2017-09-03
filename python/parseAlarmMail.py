@@ -123,6 +123,7 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
     #print results
     row_count = cursor.rowcount
     if row_count == 0:
+      print ("Found new Alarmdepesche")
       cursor.execute(sqlAlarmdepesche)
       db.commit()
     else: 

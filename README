@@ -31,11 +31,13 @@
          'port': '993',
          'user': 'myMail@myProvider.domain',
          'passwd': 'XXXXX',
-         'mailBox': 'INBOX'}
+         'mailBox': 'INBOX', 
+	 'checkIntervall' : '30'}
 
      mysql = { 'host'   : 'localhost'
          , 'user'   : 'root'
          , 'passwd' : ''
+	 , 'dbName' : 'FeuerwehrNotifications'
          }
 
 # Create used database shema
