@@ -1,5 +1,5 @@
 var app = angular.module('root', []);
-app.controller('Alarmdepesche',function($scope,$http,getAlarmdepesche) {
+app.controller('Alarmdepesche',function($scope,$http,$interval,getAlarmdepesche) {
     // refreshing
     console.log('Start controller');
     $scope.refreshing = true;
@@ -9,7 +9,14 @@ app.controller('Alarmdepesche',function($scope,$http,getAlarmdepesche) {
     $scope.start = function() {
       console.log('Start starter');
 
-      getAlarmdepesche.update($scope,$http);
+      $interval(function() {
+        //$scope.date = new Date();
+        //$scope.time = $scope.date.getTime();
+	getAlarmdepesche.update($scope,$http);
+      }, 3000);
+
+
+      //getAlarmdepesche.update($scope,$http);
 
       // show our app
       $scope.show_app = true;
