@@ -4,7 +4,7 @@ import MySQLdb
 import alarmdepescheconfig as config
 import urllib
 
-from flask.ext.cors import CORS, cross_origin
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 
@@ -38,7 +38,7 @@ def get_tasks():
       result = cursor.fetchone()
     except:
       print ("!Error in mysql statement")
-      return jsonify({'Alarmdepesche': {'Error':'Error in mysql statement'}})
+      return jsonify({'Error':'Error in mysql statement'})
     db.close()
 
     #print urllib.quote(unicode(result[3], "utf-8")) # result[3].encode('ascii').encode('utf-8'))
@@ -66,7 +66,7 @@ def get_tasks():
 #id, dbIN, messageID, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Objekt, Objekttyp, StrasseHausnummer, Segment, PLZOrt, Region, Info, Name, Zusatz
                       #, '' : result[]
                       }
-    return jsonify({'Alarmdepesche': alarmdepesche})
+    return jsonify( alarmdepesche)
 
 #@app.route('/todo/api/v1.0/tasks', methods=['GET'])
 #def get_tasks():

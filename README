@@ -57,3 +57,6 @@
 
      $ python python/parseAlarmMail.py
      $ 
+
+     $ rsync -avz ./html/* /var/www/html/Alarmdepesche/
+
