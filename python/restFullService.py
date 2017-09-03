@@ -30,14 +30,14 @@ def get_tasks():
       cursor.execute(sqlStatement)
       result = cursor.fetchone()
     except:
-      print "!Error in mysql statement"
+      print ("!Error in mysql statement")
       return jsonify({'Alarmdepesche': {'Error':'Error in mysql statement'}})
     db.close()
 
     #print urllib.quote(unicode(result[3], "utf-8")) # result[3].encode('ascii').encode('utf-8'))
     #test = result[3].decode('utf-8', 'ignore').strip().encode('utf-8')
     test = result[3].decode('utf-8', 'ignore')
-    print urllib.quote(test)
+    print (urllib.quote(test))
 
     alarmdepesche = { 'id'               : result[0]
                     , 'dbIN'             : result[1]

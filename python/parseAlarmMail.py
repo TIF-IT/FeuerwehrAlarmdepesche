@@ -123,15 +123,15 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
       cursor.execute(sqlAlarmdepesche)
       db.commit()
     else: 
-      print "The Alarmdepesche is already existing"
+      print ("The Alarmdepesche is already existing")
   except:
-    print "!Error in mysql statement"
+    print ("!Error in mysql statement")
     db.rollback()
 
   db.close()
 
 def runCheckup ():
-  print "Check for mail"
+  print ("Check for mail")
   lastMailID, mailBody = getLastMail ()
   dicAlarmdepesche    = interpretHTMLAlarmdepesche ( mailBody )
   sqlAlarmdepesche     = createSQLFromDict ( lastMailID, dicAlarmdepesche )
