@@ -6,6 +6,12 @@ import urllib
 
 from flask_cors import CORS, cross_origin
 
+import sys
+
+reload(sys)
+sys.getdefaultencoding()
+
+
 app = Flask(__name__)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -28,6 +34,10 @@ cors = CORS(app, resources={r"/api/v1.0/Alarmdepesche": {"origins": "*"}})
 #    }
 #]
 
+def strEncode (_in):
+  return _in.decode('utf-8', 'ignore')
+
+
 @app.route('/api/v1.0/Alarmdepesche', methods=['GET'])
 def get_tasks():
     db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
@@ -44,26 +54,26 @@ def get_tasks():
     #print urllib.quote(unicode(result[3], "utf-8")) # result[3].encode('ascii').encode('utf-8'))
     #test = result[3].decode('utf-8', 'ignore').strip().encode('utf-8')
     test = result[3].decode('utf-8', 'ignore')
-    print (urllib.quote(test))
+    #print (urllib.quote(test))
+    #print (type(test))
 
     alarmdepesche = { 'id'               : result[0]
                     , 'dbIN'             : result[1]
                     , 'messageID'        : result[2]
-                    , 'Einsatzstichwort' : test
-                      #, 'AlarmiertesEinsatzmittel' : result[4]
-                      #, 'Sondersignal' : result[5]
-                      #, 'Einsatzbeginn' : result[6]
-                      #, 'Einsatznummer' : result[7]
-                      #, 'Objekt' : result[8]
-                      #, 'Objekttyp' : result[9]
-                      #, 'StrasseHausnummer' : result[10]
-                      #, 'Segment' : result[11]
-                      #, 'PLZOrt' : result[12]
-                      #, 'Region' : result[13]
-                      #, 'Info' : result[14]
-                      #, 'Name' : result[15]
-                      #, 'Zusatz' : result[16]
-#id, dbIN, messageID, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Objekt, Objekttyp, StrasseHausnummer, Segment, PLZOrt, Region, Info, Name, Zusatz
+                    , 'Einsatzstichwort' : strEncode(result[3])
+                    , 'AlarmiertesEinsatzmittel' : strEncode(result[4])
+                    , 'Sondersignal' : strEncode(result[5])
+                    , 'Einsatzbeginn' : strEncode(result[6])
+                    , 'Einsatznummer' : strEncode(result[7])
+                    , 'Objekt' : strEncode(result[8])
+                    , 'Objekttyp' : strEncode(result[9])
+                    , 'StrasseHausnummer' : strEncode(result[10])
+                    , 'Segment' : strEncode(result[11])
+                    , 'PLZOrt' : strEncode(result[12])
+                    , 'Region' : strEncode(result[13])
+                    , 'Info' : strEncode(result[14])
+                    , 'Name' : strEncode(result[15])
+                    , 'Zusatz' : strEncode(result[16])
                       #, '' : result[]
                       }
     return jsonify( alarmdepesche)
@@ -77,4 +87,5 @@ def get_tasks():
 #    return "Hello, World!"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(threaded=True)
+    #app.run(debug=True)

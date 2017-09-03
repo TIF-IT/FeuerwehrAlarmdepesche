@@ -10,6 +10,12 @@ from bs4 import BeautifulSoup
 import MySQLdb
 import time
 
+import sys
+
+reload(sys)
+sys.getdefaultencoding()
+
+
 # https://stackoverflow.com/questions/25318012/how-to-connect-with-python-imap4-ssl-and-self-signed-server-ssl-cert
 
 def getLastMail ():

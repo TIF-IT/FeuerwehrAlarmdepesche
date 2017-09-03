@@ -32,6 +32,34 @@ body {
 	text-align: center;
 }
 
+.module2 {
+        position: absolute;
+        padding: 3%;
+	padding-top: 0px;
+        text-align: left;
+}
+
+.moduleHeader {
+	text-align: center;
+	margin-top:40px;
+}
+
+.moduleLine {
+	width: 100%;
+	float: left;
+	margin-left: 25%
+}
+
+.moduleCellLeft {
+	width: 30%;
+	float: left;
+}
+
+.moduleCellRight {
+        width: 50%;
+	float: left;
+}
+
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -90,17 +118,20 @@ table.padding td {
 .smallest {
 	font-size: .5em;
 }
+.largerer {
+        font-size: 2em;
+}
 .largest {
 	font-size: 3em;
 }
 .larger {
-	font-size: 2em;
+	font-size: 1em;
 }
 .padding-bottom {
     padding-bottom: .5em;	
 }
 .margin-bottom {
-    margin-bottom: .5em;	
+    margin-bottom: .7em;	
 }
 .fa {
     position: relative;
