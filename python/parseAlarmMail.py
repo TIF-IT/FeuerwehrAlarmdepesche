@@ -23,6 +23,9 @@ def getLastMail ():
  
   ids = data[0] # data is a list.
   id_list = ids.split() # ids is a space separated string
+  if len(id_list) == 0: 
+    return (0, "")
+
   latest_email_id = id_list[-1] # get the latest
  
   result, data = mail.fetch(latest_email_id, "(RFC822)") # fetch the email body (RFC822) for the given ID

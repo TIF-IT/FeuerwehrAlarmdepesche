@@ -9,12 +9,14 @@
      $ pip install --upgrade pip
      $ pip install imaplib
      $ pip install beautifulsoup4
+     $ pip install HTMLParser
+     $ pip install bs4
 
 ## Python full rest service
      $ pip install flask
 
 ## MySQL Datenbank
-     $ install python python-devel mysql-devel redhat-rpm-config gcc
+     $ yum install python python-devel mysql-devel redhat-rpm-config gcc
      $ pip install MySQL-python
 
 
