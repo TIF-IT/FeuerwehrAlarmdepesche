@@ -4,7 +4,14 @@ import MySQLdb
 import alarmdepescheconfig as config
 import urllib
 
+from flask.ext.cors import CORS, cross_origin
+
 app = Flask(__name__)
+
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+#cors = CORS(app, resources={r"/api/v1.0/Alarmdepesche": {"origins": "http://127.0.0.1:5000"}})
+cors = CORS(app, resources={r"/api/v1.0/Alarmdepesche": {"origins": "*"}})
 
 #tasks = [
 #    {

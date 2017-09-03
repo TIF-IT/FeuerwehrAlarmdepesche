@@ -146,15 +146,3 @@ while True:
   runCheckup ()
   time.sleep(int(config.imap['checkIntervall']))
 
-#loop = asyncio.get_event_loop()
-
-# Schedule the first call to display_date()
-#end_time = loop.time() + 5.0
-#loop.call_soon(loop, loop)
-
-# Blocking call interrupted by loop.stop()
-#loop.run_forever()
-#loop.close()
-
-
-
