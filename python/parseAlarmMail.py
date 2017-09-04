@@ -180,7 +180,8 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
     #print "Select> "+sqlStatement
     cursor.execute(sqlStatement)
     results = cursor.fetchall()
-  except:
+  except Exception as e:
+    print(e)
     print ("!Error in select sql statement")
   try:
     #print results
