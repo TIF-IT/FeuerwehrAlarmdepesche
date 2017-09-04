@@ -1,5 +1,4 @@
 #!/usr/bin/python
-#-*-coding: utf-8 -*-
 
 import imaplib
 import socket
@@ -86,7 +85,7 @@ def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
   for dataset in datasets:
     for alarmdepItem in availableAlarmdepesche:
       if dataset[0] == availableAlarmdepesche[alarmdepItem]:
-        foundAlarmdepesche[alarmdepItem] = dataset[1].rstrip()
+        foundAlarmdepesche[alarmdepItem] = dataset[1].encode('utf-8').rstrip()#dataset[1].decode("utf-8", 'ignore').rstrip()
 
   #print foundAlarmdepesche
 
@@ -188,12 +187,14 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
     row_count = cursor.rowcount
     if row_count == 0:
       print ("Found new Alarmdepesche")
-      print (sqlAlarmdepesche)
+      print (sqlAlarmdepesche) #.decode('utf-8', 'ignore'))
       cursor.execute(sqlAlarmdepesche)
       db.commit()
     else: 
       print ("The Alarmdepesche is already existing")
-  except:
+  #except:
+  except Exception as e: 
+    print(e)
     print ("!Error in mysql statement")
     db.rollback()
 
