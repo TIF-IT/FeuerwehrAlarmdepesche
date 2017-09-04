@@ -58,7 +58,7 @@ def getLastMail ():
   rootMessage = f.close()
 
   mailBody=rootMessage.get_payload(1).get_payload(decode=True)
-  ##print (mailBody)
+ # print (mailBody)
 
   mail.close()
   mail.logout()
@@ -77,7 +77,7 @@ def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
     dataset = [td.get_text() for td in row.find_all("td")]
     datasets.append(dataset)
 
-  #print datasets
+  print datasets
 
 
   foundAlarmdepesche = {}
