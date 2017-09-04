@@ -16,6 +16,23 @@ import sys
 reload(sys)
 sys.getdefaultencoding()
 
+availableAlarmdepesche = { 'Einsatzstichwort':'Einsatzstichwort:'
+                           , 'AlarmiertesEinsatzmittel':'Alarmiertes Einsatzmittel:'
+                           , 'Sondersignal':'Sondersignal:'
+                           , 'Einsatzbeginn':'Einsatzbeginn(Soll):'
+                           , 'Einsatznummer':'Einsatznummer:'
+                           , 'Objekt':'Objekt:'
+                           , 'Objekttyp':'Objekttyp:'
+                           , 'StrasseHausnummer':'Strasse / Hausnummer:'
+                           , 'Segment':'Segment:'
+                           , 'PLZOrt':'PLZ / Ort:'
+                           , 'Region':'Region:'
+                           , 'Info':'Info:'
+                           , 'Name':'Name:'
+                           , 'Zusatz':'Zusatz:'
+#                           , '':''
+                           }
+
 
 # https://stackoverflow.com/questions/25318012/how-to-connect-with-python-imap4-ssl-and-self-signed-server-ssl-cert
 
@@ -63,22 +80,6 @@ def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
 
   #print datasets
 
-  availableAlarmdepesche = { 'Einsatzstichwort':'Einsatzstichwort:'
-                           , 'AlarmiertesEinsatzmittel':'Alarmiertes Einsatzmittel:'
-                           , 'Sondersignal':'Sondersignal:'
-                           , 'Einsatzbeginn':'Einsatzbeginn(Soll):'
-                           , 'Einsatznummer':'Einsatznummer:'
-                           , 'Objekt':'Objekt:'
-                           , 'Objekttyp':'Objekttyp:'
-                           , 'StrasseHausnummer':'Strasse / Hausnummer:'
-                           , 'Segment':'Segment:'
-                           , 'PLZOrt':'PLZ / Ort:'
-                           , 'Region':'Region:'
-                           , 'Info':'Info:'
-                           , 'Name':'Name:'
-                           , 'Zusatz':'Zusatz:'
-#                           , '':''
-                           }
 
   foundAlarmdepesche = {}
 
@@ -96,59 +97,67 @@ def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
   sqlQuery = "insert into Alarmdepesche (messageID, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Objekt, Objekttyp, StrasseHausnummer, Segment, PLZOrt, Region, Info, Name, Zusatz) VALUES ("
 
   sqlQuery += str(lastMailID)+","
-  if 'Einsatzstichwort' in dicAlarmdepesche.keys():
+
+#  for depesche in availableAlarmdepesche:
+#    if depesche in dicAlarmdepesche.keys():
+#      sqlQuery += "\""+dicAlarmdepesche[depesche]+"\","
+#    else:
+#      sqlQuery += "\"\","
+
+
+  if 'Einsatzstichwort' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Einsatzstichwort"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'AlarmiertesEinsatzmittel' in dicAlarmdepesche.keys():
+  if 'AlarmiertesEinsatzmittel' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["AlarmiertesEinsatzmittel"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Sondersignal' in dicAlarmdepesche.keys():
+  if 'Sondersignal' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Sondersignal"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Einsatzbeginn' in dicAlarmdepesche.keys():
+  if 'Einsatzbeginn' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Einsatzbeginn"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Einsatznummer' in dicAlarmdepesche.keys():
+  if 'Einsatznummer' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Einsatznummer"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Objekt' in dicAlarmdepesche.keys():
+  if 'Objekt' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Objekt"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Objekttyp' in dicAlarmdepesche.keys():
+  if 'Objekttyp' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Objekttyp"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'StrasseHausnummer' in dicAlarmdepesche.keys():
+  if 'StrasseHausnummer' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["StrasseHausnummer"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Segment' in dicAlarmdepesche.keys():
+  if 'Segment' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Segment"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'PLZOrt' in dicAlarmdepesche.keys():
+  if 'PLZOrt' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["PLZOrt"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Region' in dicAlarmdepesche.keys():
+  if 'Region' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Region"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Info' in dicAlarmdepesche.keys():
+  if 'Info' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Info"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Name' in dicAlarmdepesche.keys():
+  if 'Name' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Name"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Zusatz' in dicAlarmdepesche.keys():
+  if 'Zusatz' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Zusatz"]+"\""
   else:
     sqlQuery += "\"\","
@@ -157,6 +166,8 @@ def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
 
 
   sqlQuery += ");"
+
+  #print (sqlQuery)
 
   return sqlQuery
 
@@ -170,10 +181,14 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
     #print "Select> "+sqlStatement
     cursor.execute(sqlStatement)
     results = cursor.fetchall()
+  except:
+    print ("!Error in select sql statement")
+  try:
     #print results
     row_count = cursor.rowcount
     if row_count == 0:
       print ("Found new Alarmdepesche")
+      print (sqlAlarmdepesche)
       cursor.execute(sqlAlarmdepesche)
       db.commit()
     else: 
