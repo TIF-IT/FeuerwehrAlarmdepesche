@@ -91,11 +91,15 @@ def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
 
   return foundAlarmdepesche
 
+# TODO: 
 def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
   sqlQuery = "insert into Alarmdepesche (messageID, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Objekt, Objekttyp, StrasseHausnummer, Segment, PLZOrt, Region, Info, Name, Zusatz) VALUES ("
 
   sqlQuery += str(lastMailID)+","
-  sqlQuery += "\""+dicAlarmdepesche["Einsatzstichwort"]+"\","
+  if 'Einsatzstichwort' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Einsatzstichwort"]+"\","
+  else:
+    sqlQuery += "\"\","
   sqlQuery += "\""+dicAlarmdepesche["AlarmiertesEinsatzmittel"]+"\","
   sqlQuery += "\""+dicAlarmdepesche["Sondersignal"]+"\","
   sqlQuery += "\""+dicAlarmdepesche["Einsatzbeginn"]+"\","
