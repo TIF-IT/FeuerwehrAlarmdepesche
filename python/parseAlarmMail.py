@@ -100,19 +100,58 @@ def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
     sqlQuery += "\""+dicAlarmdepesche["Einsatzstichwort"]+"\","
   else:
     sqlQuery += "\"\","
-  sqlQuery += "\""+dicAlarmdepesche["AlarmiertesEinsatzmittel"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["Sondersignal"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["Einsatzbeginn"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["Einsatznummer"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["Objekt"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["Objekttyp"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["StrasseHausnummer"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["Segment"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["PLZOrt"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["Region"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["Info"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["Name"]+"\","
-  sqlQuery += "\""+dicAlarmdepesche["Zusatz"]+"\""
+  if 'AlarmiertesEinsatzmittel' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["AlarmiertesEinsatzmittel"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'Sondersignal' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Sondersignal"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'Einsatzbeginn' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Einsatzbeginn"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'Einsatznummer' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Einsatznummer"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'Objekt' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Objekt"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'Objekttyp' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Objekttyp"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'StrasseHausnummer' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["StrasseHausnummer"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'Segment' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Segment"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'PLZOrt' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["PLZOrt"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'Region' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Region"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'Info' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Info"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'Name' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Name"]+"\","
+  else:
+    sqlQuery += "\"\","
+  if 'Zusatz' in dicAlarmdepesche.keys():
+    sqlQuery += "\""+dicAlarmdepesche["Zusatz"]+"\""
+  else:
+    sqlQuery += "\"\","
 
   #sqlQuery += "\""+dicAlarmdepesche[""]+"\","
 
