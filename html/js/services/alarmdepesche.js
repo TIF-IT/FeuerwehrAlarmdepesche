@@ -4,7 +4,7 @@ app.service('getAlarmdepesche',function() {
     //method: 'JSONP',
     //url: 'http://127.0.0.1:5000/api/v1.0/Alarmdepesche'
     //})
-    $http.get('http://127.0.0.1:5000/api/v1.0/Alarmdepesche')
+    $http.get('http://192.168.75.8:5000/api/v1.0/Alarmdepesche')
        .success(function(response) {
          $scope.dicAlarmdepesche = response;
          console.log('OK');

@@ -58,7 +58,7 @@ def getLastMail ():
   rootMessage = f.close()
 
   mailBody=rootMessage.get_payload(1).get_payload(decode=True)
-  print (mailBody)
+  #print (mailBody)
 
   mail.close()
   mail.logout()
@@ -72,22 +72,28 @@ def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
   soup = BeautifulSoup(htmlAlarmdepesche, "lxml")
   table = soup.find("table", attrs={})
 
+#  datasets = []
+#  for row in table.find_all("tr")[1:]:
+#    dataset = [td.get_text() for td in row.find_all("td")]
+#    datasets.append(dataset)
+
   datasets = []
-  for row in table.find_all("tr")[1:]:
+  for row in soup.find_all("tr")[1:]:
     dataset = [td.get_text() for td in row.find_all("td")]
     datasets.append(dataset)
 
-  #print datasets
+#  print datasets
 
 
   foundAlarmdepesche = {}
 
   for dataset in datasets:
     for alarmdepItem in availableAlarmdepesche:
-      if dataset[0] == availableAlarmdepesche[alarmdepItem]:
+#      if dataset[0] == availableAlarmdepesche[alarmdepItem]:
+      if dataset[0].find(availableAlarmdepesche[alarmdepItem]) != -1:
         foundAlarmdepesche[alarmdepItem] = dataset[1].encode('utf-8').rstrip()#dataset[1].decode("utf-8", 'ignore').rstrip()
 
-  #print foundAlarmdepesche
+#  print foundAlarmdepesche
 
   return foundAlarmdepesche
 
@@ -159,7 +165,7 @@ def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
   if 'Zusatz' in dicAlarmdepesche:
     sqlQuery += "\""+dicAlarmdepesche["Zusatz"]+"\""
   else:
-    sqlQuery += "\"\","
+    sqlQuery += "\"\""
 
   #sqlQuery += "\""+dicAlarmdepesche[""]+"\","
 
@@ -188,7 +194,7 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
     row_count = cursor.rowcount
     if row_count == 0:
       print ("Found new Alarmdepesche")
-      print (sqlAlarmdepesche) #.decode('utf-8', 'ignore'))
+#      print (sqlAlarmdepesche) #.decode('utf-8', 'ignore'))
       cursor.execute(sqlAlarmdepesche)
       db.commit()
     else: 
