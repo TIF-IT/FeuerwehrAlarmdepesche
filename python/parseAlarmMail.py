@@ -15,22 +15,26 @@ import sys
 reload(sys)
 sys.getdefaultencoding()
 
-availableAlarmdepesche = { 'Einsatzstichwort':'Einsatzstichwort:'
-                           , 'AlarmiertesEinsatzmittel':'Alarmiertes Einsatzmittel:'
-                           , 'Sondersignal':'Sondersignal:'
-                           , 'Einsatzbeginn':'Einsatzbeginn(Soll):'
-                           , 'Einsatznummer':'Einsatznummer:'
+availableAlarmdepescheDefault = { 'Einsatzstichwort':'Einsatzstichwort'
+                           , 'AlarmiertesEinsatzmittel':'Einsatzmittel'
+                           , 'Sondersignal':'Sondersignal'
+                           , 'Einsatzbeginn':'Einsatzbeginn'
+                           , 'Einsatznummer':'Einsatznummer'
                            , 'Objekt':'Objekt:'
-                           , 'Objekttyp':'Objekttyp:'
-                           , 'StrasseHausnummer':'Strasse / Hausnummer:'
-                           , 'Segment':'Segment:'
-                           , 'PLZOrt':'PLZ / Ort:'
-                           , 'Region':'Region:'
-                           , 'Info':'Info:'
-                           , 'Name':'Name:'
-                           , 'Zusatz':'Zusatz:'
+                           , 'Objekttyp':'Objekttyp'
+                           , 'StrasseHausnummer':'Strasse'
+                           , 'Segment':'Segment'
+                           , 'PLZOrt':'PLZ'
+                           , 'Region':'Region'
+                           , 'Info':'Info'
+                           , 'Name':'Name'
+                           , 'Zusatz':'Zusatz'
 #                           , '':''
                            }
+
+availableAlarmdepescheOperationTarget = {  }
+
+availableAlarmdepescheTransportTarget = {  }
 
 
 # https://stackoverflow.com/questions/25318012/how-to-connect-with-python-imap4-ssl-and-self-signed-server-ssl-cert
@@ -58,7 +62,7 @@ def getLastMail ():
   rootMessage = f.close()
 
   mailBody=rootMessage.get_payload(1).get_payload(decode=True)
-  #print (mailBody)
+  print (mailBody)
 
   mail.close()
   mail.logout()
@@ -82,18 +86,25 @@ def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
     dataset = [td.get_text() for td in row.find_all("td")]
     datasets.append(dataset)
 
-#  print datasets
+  print datasets
 
 
   foundAlarmdepesche = {}
+  operationTarget = {}
+  transportDestination = {}
+
+  isDefault = True
+  isOperationTarget = False
+  isTransportTarget = False
 
   for dataset in datasets:
     for alarmdepItem in availableAlarmdepesche:
+      item = dataset[1].encode('utf-8').rstrip()#dataset[1].decode("utf-8", 'ignore').rstrip()
 #      if dataset[0] == availableAlarmdepesche[alarmdepItem]:
       if dataset[0].find(availableAlarmdepesche[alarmdepItem]) != -1:
-        foundAlarmdepesche[alarmdepItem] = dataset[1].encode('utf-8').rstrip()#dataset[1].decode("utf-8", 'ignore').rstrip()
+        foundAlarmdepesche[alarmdepItem] = item 
 
-#  print foundAlarmdepesche
+  print foundAlarmdepesche
 
   return foundAlarmdepesche
 
