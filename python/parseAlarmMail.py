@@ -17,24 +17,32 @@ sys.getdefaultencoding()
 
 availableAlarmdepescheDefault = { 'Einsatzstichwort':'Einsatzstichwort'
                            , 'AlarmiertesEinsatzmittel':'Einsatzmittel'
+                           , 'Sachverhalt':'Sachverhalt'
                            , 'Sondersignal':'Sondersignal'
+                           , 'Patientenname':'Patientenname'
                            , 'Einsatzbeginn':'Einsatzbeginn'
                            , 'Einsatznummer':'Einsatznummer'
-                           , 'Objekt':'Objekt:'
-                           , 'Objekttyp':'Objekttyp'
-                           , 'StrasseHausnummer':'Strasse'
-                           , 'Segment':'Segment'
-                           , 'PLZOrt':'PLZ'
-                           , 'Region':'Region'
-                           , 'Info':'Info'
                            , 'Name':'Name'
                            , 'Zusatz':'Zusatz'
 #                           , '':''
                            }
+# Einsatzziel
+availableAlarmdepescheOperationTarget = { 'Objekt':'Objekt:' 
+                                        , 'Objekttyp':'Objekttyp'
+                                        , 'StrasseHausnummer':'Strasse'
+                                        , 'Segment':'Segment'
+                                        , 'PLZOrt':'PLZ'
+                                        , 'Region':'Region'
+                                        , 'Info':'Info'
+                                        }
+#  Transportziel
+availableAlarmdepescheTransportTarget = { 'Transportziel':'Transportziel' 
+                                        , 'Objekt':'Objekt:' 
+                                        , 'Objekttyp':'Objekttyp'
+                                        , 'StrasseHausnummer':'Strasse'
+                                        , 'PLZOrt':'PLZ'
+                                        }
 
-availableAlarmdepescheOperationTarget = {  }
-
-availableAlarmdepescheTransportTarget = {  }
 
 
 # https://stackoverflow.com/questions/25318012/how-to-connect-with-python-imap4-ssl-and-self-signed-server-ssl-cert
