@@ -70,7 +70,7 @@ def getLastMail ():
   rootMessage = f.close()
 
   mailBody=rootMessage.get_payload(1).get_payload(decode=True)
-  print (mailBody)
+#  print (mailBody)
 
   mail.close()
   mail.logout()
@@ -89,15 +89,23 @@ def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
 #    dataset = [td.get_text() for td in row.find_all("td")]
 #    datasets.append(dataset)
 
-  datasets = []
-  for row in soup.find_all("tr")[1:]:
-    dataset = [td.get_text() for td in row.find_all("td")]
-    datasets.append(dataset)
+  tables = []
+  count = 0
+  for table in soup.find_all("table")[1:]:
+    datasets = []
+    for row in table.find_all("tr")[1:]:
+      dataset = [td.get_text() for td in row.find_all("td")]
+      datasets.append(dataset)
+    tables.append((count,datasets))
+    count = count + 1
+#  for row in soup.find_all("tr")[1:]:
+#    dataset = [td.get_text() for td in row.find_all("td")]
+#    datasets.append(dataset)
 
-  print datasets
+#  print tables
 
 
-  foundAlarmdepesche = {}
+  foundAlarmdepesche = {'Default':{},'Einsatzziel':{},'Transportziel':{}}
   operationTarget = {}
   transportDestination = {}
 
@@ -105,12 +113,34 @@ def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
   isOperationTarget = False
   isTransportTarget = False
 
-  for dataset in datasets:
-    for alarmdepItem in availableAlarmdepesche:
-      item = dataset[1].encode('utf-8').rstrip()#dataset[1].decode("utf-8", 'ignore').rstrip()
-#      if dataset[0] == availableAlarmdepesche[alarmdepItem]:
-      if dataset[0].find(availableAlarmdepesche[alarmdepItem]) != -1:
-        foundAlarmdepesche[alarmdepItem] = item 
+
+  for table in tables:
+    (count, datasets) = table
+    for dataset in datasets:
+      availableAlarmdepesche = availableAlarmdepescheDefault
+      identifier = "Default"
+      # Einsatzziel
+      if datasets[0][0].find("Einsatzziel") != -1:
+        availableAlarmdepesche = availableAlarmdepescheOperationTarget
+        identifier = "Einsatzziel"
+      # Transportziel
+      if datasets[0][0].find("Transportziel") != -1:
+        availableAlarmdepesche = availableAlarmdepescheTransportTarget
+        identifier = "Transportziel"
+
+      for alarmdepItem in availableAlarmdepesche:
+        if dataset[0].find(availableAlarmdepesche[alarmdepItem]) != -1 and len(dataset) > 1:
+          item = dataset[1].encode('utf-8').rstrip()#dataset[1].decode("utf-8", 'ignore').rstrip()
+          foundAlarmdepesche[identifier][alarmdepItem] = item
+
+#  for dataset in datasets:
+#    for alarmdepItem in availableAlarmdepesche:
+#      item = dataset[1].encode('utf-8').rstrip()#dataset[1].decode("utf-8", 'ignore').rstrip()
+##      if dataset[0] == availableAlarmdepesche[alarmdepItem]:
+#      if dataset[0].find(availableAlarmdepesche[alarmdepItem]) != -1:
+#        foundAlarmdepesche[alarmdepItem] = item 
+
+
 
   print foundAlarmdepesche
 
@@ -128,28 +158,57 @@ def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
 #    else:
 #      sqlQuery += "\"\","
 
+ #availableAlarmdepescheDefault = { 'Einsatzstichwort':'Einsatzstichwort'
+ #19                            , 'AlarmiertesEinsatzmittel':'Einsatzmittel'
+ #20                            , 'Sachverhalt':'Sachverhalt'
+ #21                            , 'Sondersignal':'Sondersignal'
+ #22                            , 'Patientenname':'Patientenname'
+ #23                            , 'Einsatzbeginn':'Einsatzbeginn'
+ #24                            , 'Einsatznummer':'Einsatznummer'
+ #25                            , 'Name':'Name'
+ #26                            , 'Zusatz':'Zusatz'
+ #27 #                           , '':''
+ #28                            }
+ #29 # Einsatzziel
+ #30 availableAlarmdepescheOperationTarget = { 'Objekt':'Objekt:'
+ #31                                         , 'Objekttyp':'Objekttyp'
+ #32                                         , 'StrasseHausnummer':'Strasse'
+ #33                                         , 'Segment':'Segment'
+ #34                                         , 'PLZOrt':'PLZ'
+ #35                                         , 'Region':'Region'
+ #36                                         , 'Info':'Info'
+ #37                                         }
+ #38 #  Transportziel
+ #39 availableAlarmdepescheTransportTarget = { 'Transportziel':'Transportziel'
+ #4#0                                         , 'Objekt':'Objekt:'
+ ##41                                         , 'Objekttyp':'Objekttyp'
+ ##42                                         , 'StrasseHausnummer':'Strasse'
+ #43                                         , 'PLZOrt':'PLZ'
+ #44                                         }
 
-  if 'Einsatzstichwort' in dicAlarmdepesche:
+  return ""
+
+  if 'Einsatzstichwort' in dicAlarmdepesche['Default']:
     sqlQuery += "\""+dicAlarmdepesche["Einsatzstichwort"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'AlarmiertesEinsatzmittel' in dicAlarmdepesche:
+  if 'AlarmiertesEinsatzmittel' in dicAlarmdepesche['Default']:
     sqlQuery += "\""+dicAlarmdepesche["AlarmiertesEinsatzmittel"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Sondersignal' in dicAlarmdepesche:
+  if 'Sondersignal' in dicAlarmdepesche['Default']:
     sqlQuery += "\""+dicAlarmdepesche["Sondersignal"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Einsatzbeginn' in dicAlarmdepesche:
+  if 'Einsatzbeginn' in dicAlarmdepesche['Default']:
     sqlQuery += "\""+dicAlarmdepesche["Einsatzbeginn"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Einsatznummer' in dicAlarmdepesche:
+  if 'Einsatznummer' in dicAlarmdepesche['Default']:
     sqlQuery += "\""+dicAlarmdepesche["Einsatznummer"]+"\","
   else:
     sqlQuery += "\"\","
-  if 'Objekt' in dicAlarmdepesche:
+  if 'Objekt' in dicAlarmdepesche['Einsatzziel']:
     sqlQuery += "\""+dicAlarmdepesche["Objekt"]+"\","
   else:
     sqlQuery += "\"\","
