@@ -146,111 +146,57 @@ def interpretHTMLAlarmdepesche ( htmlAlarmdepesche ):
 
   return foundAlarmdepesche
 
+def getDictValueByKey ( _key, _dict ):
+  if _key in _dict:
+    return _dict[_key]
+  else:
+    return ""
+
 # TODO: 
 def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
-  sqlQuery = "insert into Alarmdepesche (messageID, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Objekt, Objekttyp, StrasseHausnummer, Segment, PLZOrt, Region, Info, Name, Zusatz) VALUES ("
+  sqlQuery = "insert into Alarmdepesche (messageID, "
+  # Default
+  sqlQuery += "Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Name, Zusatz"
+  # Einsatzziel
+  sqlQuery += ", Target_Objekt, Target_Objekttyp, Target_StrasseHausnummer, Target_Segment, Target_PLZOrt, Target_Region, Target_Info"
+  # TransportTarget
+  sqlQuery += ", TransTarget_Transportziel, TransTarget_Objekt, TransTarget_Objekttyp, TransTarget_StrasseHausnummer, TransTarget_PLZOrt"
+  sqlQuery += ") VALUES ("
 
   sqlQuery += str(lastMailID)+","
+  # Default
+  sqlQuery += "\""+getDictValueByKey('Einsatzstichwort', dicAlarmdepesche['Default'])+"\","
+  sqlQuery += "\""+getDictValueByKey('AlarmiertesEinsatzmittel', dicAlarmdepesche['Default'])+"\","
+  sqlQuery += "\""+getDictValueByKey('Sondersignal', dicAlarmdepesche['Default'])+"\","
+  sqlQuery += "\""+getDictValueByKey('Einsatzbeginn', dicAlarmdepesche['Default'])+"\","
+  sqlQuery += "\""+getDictValueByKey('Einsatznummer', dicAlarmdepesche['Default'])+"\","
+  sqlQuery += "\""+getDictValueByKey('Name', dicAlarmdepesche['Default'])+"\","
+  sqlQuery += "\""+getDictValueByKey('Zusatz', dicAlarmdepesche['Default'])+"\","
+  # Einsatzziel
+  sqlQuery += "\""+getDictValueByKey('Objekt', dicAlarmdepesche['Einsatzziel'])+"\","
+  sqlQuery += "\""+getDictValueByKey('Objekttyp', dicAlarmdepesche['Einsatzziel'])+"\","
+  sqlQuery += "\""+getDictValueByKey('StrasseHausnummer', dicAlarmdepesche['Einsatzziel'])+"\","
+  sqlQuery += "\""+getDictValueByKey('Segment', dicAlarmdepesche['Einsatzziel'])+"\","
+  sqlQuery += "\""+getDictValueByKey('PLZOrt', dicAlarmdepesche['Einsatzziel'])+"\","
+  sqlQuery += "\""+getDictValueByKey('Region', dicAlarmdepesche['Einsatzziel'])+"\","
+  sqlQuery += "\""+getDictValueByKey('Info', dicAlarmdepesche['Einsatzziel'])+"\","
+  # TransportTarget
+  if 'TransportTarget' in dicAlarmdepesche:
+    subDicAlarmdepesch = dicAlarmdepesche['TransportTarget']
+  else:
+    subDicAlarmdepesch = {}
+  sqlQuery += "\""+getDictValueByKey('Transportziel', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Objekt', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Objekttyp', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('StrasseHausnummer', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('PLZOrt', subDicAlarmdepesch)+"\""
 
-#  for depesche in availableAlarmdepesche:
-#    if depesche in dicAlarmdepesche.keys():
-#      sqlQuery += "\""+dicAlarmdepesche[depesche]+"\","
-#    else:
-#      sqlQuery += "\"\","
 
- #availableAlarmdepescheDefault = { 'Einsatzstichwort':'Einsatzstichwort'
- #19                            , 'AlarmiertesEinsatzmittel':'Einsatzmittel'
- #20                            , 'Sachverhalt':'Sachverhalt'
- #21                            , 'Sondersignal':'Sondersignal'
- #22                            , 'Patientenname':'Patientenname'
- #23                            , 'Einsatzbeginn':'Einsatzbeginn'
- #24                            , 'Einsatznummer':'Einsatznummer'
- #25                            , 'Name':'Name'
- #26                            , 'Zusatz':'Zusatz'
- #27 #                           , '':''
- #28                            }
- #29 # Einsatzziel
- #30 availableAlarmdepescheOperationTarget = { 'Objekt':'Objekt:'
- #31                                         , 'Objekttyp':'Objekttyp'
- #32                                         , 'StrasseHausnummer':'Strasse'
- #33                                         , 'Segment':'Segment'
- #34                                         , 'PLZOrt':'PLZ'
- #35                                         , 'Region':'Region'
- #36                                         , 'Info':'Info'
- #37                                         }
- #38 #  Transportziel
- #39 availableAlarmdepescheTransportTarget = { 'Transportziel':'Transportziel'
- #4#0                                         , 'Objekt':'Objekt:'
- ##41                                         , 'Objekttyp':'Objekttyp'
- ##42                                         , 'StrasseHausnummer':'Strasse'
- #43                                         , 'PLZOrt':'PLZ'
- #44                                         }
-
-  return ""
-
-  if 'Einsatzstichwort' in dicAlarmdepesche['Default']:
-    sqlQuery += "\""+dicAlarmdepesche["Einsatzstichwort"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'AlarmiertesEinsatzmittel' in dicAlarmdepesche['Default']:
-    sqlQuery += "\""+dicAlarmdepesche["AlarmiertesEinsatzmittel"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'Sondersignal' in dicAlarmdepesche['Default']:
-    sqlQuery += "\""+dicAlarmdepesche["Sondersignal"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'Einsatzbeginn' in dicAlarmdepesche['Default']:
-    sqlQuery += "\""+dicAlarmdepesche["Einsatzbeginn"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'Einsatznummer' in dicAlarmdepesche['Default']:
-    sqlQuery += "\""+dicAlarmdepesche["Einsatznummer"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'Objekt' in dicAlarmdepesche['Einsatzziel']:
-    sqlQuery += "\""+dicAlarmdepesche["Objekt"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'Objekttyp' in dicAlarmdepesche:
-    sqlQuery += "\""+dicAlarmdepesche["Objekttyp"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'StrasseHausnummer' in dicAlarmdepesche:
-    sqlQuery += "\""+dicAlarmdepesche["StrasseHausnummer"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'Segment' in dicAlarmdepesche:
-    sqlQuery += "\""+dicAlarmdepesche["Segment"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'PLZOrt' in dicAlarmdepesche:
-    sqlQuery += "\""+dicAlarmdepesche["PLZOrt"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'Region' in dicAlarmdepesche:
-    sqlQuery += "\""+dicAlarmdepesche["Region"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'Info' in dicAlarmdepesche:
-    sqlQuery += "\""+dicAlarmdepesche["Info"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'Name' in dicAlarmdepesche:
-    sqlQuery += "\""+dicAlarmdepesche["Name"]+"\","
-  else:
-    sqlQuery += "\"\","
-  if 'Zusatz' in dicAlarmdepesche:
-    sqlQuery += "\""+dicAlarmdepesche["Zusatz"]+"\""
-  else:
-    sqlQuery += "\"\""
-
-  #sqlQuery += "\""+dicAlarmdepesche[""]+"\","
-
+  # availableAlarmdepescheDefault: Sachverhalt, Sondersignal, Patientenname, 
+  # availableAlarmdepescheTransportTarget: Transportziel, Objekt, Objekttyp, StrasseHausnummer, PLZOrt
 
   sqlQuery += ");"
-
-  #print (sqlQuery)
+  print (sqlQuery)
 
   return sqlQuery
 
@@ -260,7 +206,7 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
   db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
   cursor = db.cursor()
   try:
-    sqlStatement = "select id from Alarmdepesche where Einsatznummer='"+dicAlarmdepesche["Einsatznummer"]+"';"
+    sqlStatement = "select id from Alarmdepesche where Einsatznummer='"+dicAlarmdepesche['Default']["Einsatznummer"]+"';"
     #print "Select> "+sqlStatement
     cursor.execute(sqlStatement)
     results = cursor.fetchall()
