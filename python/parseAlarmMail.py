@@ -156,7 +156,7 @@ def getDictValueByKey ( _key, _dict ):
 def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
   sqlQuery = "insert into Alarmdepesche (messageID, "
   # Default
-  sqlQuery += "Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Name, Zusatz"
+  sqlQuery += "Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Name, Zusatz, Sachverhalt, Patientenname"
   # Einsatzziel
   sqlQuery += ", Target_Objekt, Target_Objekttyp, Target_StrasseHausnummer, Target_Segment, Target_PLZOrt, Target_Region, Target_Info"
   # TransportTarget
@@ -165,26 +165,30 @@ def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
 
   sqlQuery += str(lastMailID)+","
   # Default
-  sqlQuery += "\""+getDictValueByKey('Einsatzstichwort', dicAlarmdepesche['Default'])+"\","
-  sqlQuery += "\""+getDictValueByKey('AlarmiertesEinsatzmittel', dicAlarmdepesche['Default'])+"\","
-  sqlQuery += "\""+getDictValueByKey('Sondersignal', dicAlarmdepesche['Default'])+"\","
-  sqlQuery += "\""+getDictValueByKey('Einsatzbeginn', dicAlarmdepesche['Default'])+"\","
-  sqlQuery += "\""+getDictValueByKey('Einsatznummer', dicAlarmdepesche['Default'])+"\","
-  sqlQuery += "\""+getDictValueByKey('Name', dicAlarmdepesche['Default'])+"\","
-  sqlQuery += "\""+getDictValueByKey('Zusatz', dicAlarmdepesche['Default'])+"\","
+  subDicAlarmdepesch = dicAlarmdepesche['Default'] if 'Default' in dicAlarmdepesche else {}
+  sqlQuery += "\""+getDictValueByKey('Einsatzstichwort', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('AlarmiertesEinsatzmittel', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Sondersignal', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Einsatzbeginn', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Einsatznummer', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Name', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Zusatz', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Sachverhalt', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Patientenname', subDicAlarmdepesch)+"\","
   # Einsatzziel
-  sqlQuery += "\""+getDictValueByKey('Objekt', dicAlarmdepesche['Einsatzziel'])+"\","
-  sqlQuery += "\""+getDictValueByKey('Objekttyp', dicAlarmdepesche['Einsatzziel'])+"\","
-  sqlQuery += "\""+getDictValueByKey('StrasseHausnummer', dicAlarmdepesche['Einsatzziel'])+"\","
-  sqlQuery += "\""+getDictValueByKey('Segment', dicAlarmdepesche['Einsatzziel'])+"\","
-  sqlQuery += "\""+getDictValueByKey('PLZOrt', dicAlarmdepesche['Einsatzziel'])+"\","
-  sqlQuery += "\""+getDictValueByKey('Region', dicAlarmdepesche['Einsatzziel'])+"\","
-  sqlQuery += "\""+getDictValueByKey('Info', dicAlarmdepesche['Einsatzziel'])+"\","
+  subDicAlarmdepesch = dicAlarmdepesche['Einsatzziel'] if 'Einsatzziel' in dicAlarmdepesche else {}
+  sqlQuery += "\""+getDictValueByKey('Objekt', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Objekttyp', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('StrasseHausnummer', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Segment', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('PLZOrt', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Region', subDicAlarmdepesch)+"\","
+  sqlQuery += "\""+getDictValueByKey('Info', subDicAlarmdepesch)+"\","
   # TransportTarget
-  if 'TransportTarget' in dicAlarmdepesche:
-    subDicAlarmdepesch = dicAlarmdepesche['TransportTarget']
-  else:
-    subDicAlarmdepesch = {}
+  subDicAlarmdepesch = dicAlarmdepesche['TransportTarget'] if 'TransportTarget' in dicAlarmdepesche else {}
+#    subDicAlarmdepesch = dicAlarmdepesche['TransportTarget']
+#  else:
+#    subDicAlarmdepesch = {}
   sqlQuery += "\""+getDictValueByKey('Transportziel', subDicAlarmdepesch)+"\","
   sqlQuery += "\""+getDictValueByKey('Objekt', subDicAlarmdepesch)+"\","
   sqlQuery += "\""+getDictValueByKey('Objekttyp', subDicAlarmdepesch)+"\","
@@ -206,7 +210,8 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
   db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
   cursor = db.cursor()
   try:
-    sqlStatement = "select id from Alarmdepesche where Einsatznummer='"+dicAlarmdepesche['Default']["Einsatznummer"]+"';"
+    subDicAlarmdepesch = dicAlarmdepesche['Default'] if 'Default' in dicAlarmdepesche else {"Einsatznummer":0}
+    sqlStatement = "select id from Alarmdepesche where Einsatznummer='"+subDicAlarmdepesch["Einsatznummer"]+"';"
     #print "Select> "+sqlStatement
     cursor.execute(sqlStatement)
     results = cursor.fetchall()
