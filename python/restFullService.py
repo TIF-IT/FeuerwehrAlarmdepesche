@@ -47,7 +47,7 @@ def get_tasks():
     db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
     cursor = db.cursor()
     try:
-      sqlStatement = "select id, dbIN, messageID, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Objekt, Objekttyp, StrasseHausnummer, Segment, PLZOrt, Region, Info, Name, Zusatz from Alarmdepesche order by id desc limit 1";
+      sqlStatement = "select id, dbIN, messageID, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Target_Objekt, Target_Objekttyp, Target_StrasseHausnummer, Target_Segment, Target_PLZOrt, Target_Region, Target_Info, Name, Zusatz, TransTarget_Transportziel, TransTarget_Objekt, TransTarget_Objekttyp, TransTarget_StrasseHausnummer, TransTarget_PLZOrt from Alarmdepesche order by id desc limit 1";
       cursor.execute(sqlStatement)
       result = cursor.fetchone()
     except:
@@ -61,23 +61,31 @@ def get_tasks():
     #print (urllib.quote(test))
     #print (type(test))
 
-    alarmdepesche = { 'id'               : result[0]
-                    , 'dbIN'             : result[1]
-                    , 'messageID'        : result[2]
-                    , 'Einsatzstichwort' : strEncode(result[3])
-                    , 'AlarmiertesEinsatzmittel' : strEncode(result[4])
-                    , 'Sondersignal' : strEncode(result[5])
-                    , 'Einsatzbeginn' : strEncode(result[6])
-                    , 'Einsatznummer' : strEncode(result[7])
-                    , 'Objekt' : strEncode(result[8])
-                    , 'Objekttyp' : strEncode(result[9])
-                    , 'StrasseHausnummer' : strEncode(result[10])
-                    , 'Segment' : strEncode(result[11])
-                    , 'PLZOrt' : strEncode(result[12])
-                    , 'Region' : strEncode(result[13])
-                    , 'Info' : strEncode(result[14])
-                    , 'Name' : strEncode(result[15])
-                    , 'Zusatz' : strEncode(result[16])
+    alarmdepesche = { 'Default': { 'id'               : result[0]
+                                 , 'dbIN'             : result[1]
+                                 , 'messageID'        : result[2]
+                                 , 'Einsatzstichwort' : strEncode(result[3])
+                                 , 'AlarmiertesEinsatzmittel' : strEncode(result[4])
+                                 , 'Sondersignal' : strEncode(result[5])
+                                 , 'Einsatzbeginn' : strEncode(result[6])
+                                 , 'Einsatznummer' : strEncode(result[7])
+                                 , 'Name' : strEncode(result[15])
+                                 , 'Zusatz' : strEncode(result[16])
+                                 }
+                    , 'Target' : { 'Objekt' : strEncode(result[8])
+                                 , 'Objekttyp' : strEncode(result[9])
+                                 , 'StrasseHausnummer' : strEncode(result[10])
+                                 , 'Segment' : strEncode(result[11])
+                                 , 'PLZOrt' : strEncode(result[12])
+                                 , 'Region' : strEncode(result[13])
+                                 , 'Info' : strEncode(result[14])
+                                 }
+                    , 'TransportTarget' : { 'Transportziel' : strEncode(result[17])
+                                          , 'Objekt' : strEncode(result[18])
+                                          , 'Objekttyp' : strEncode(result[19])
+                                          , 'StrasseHausnummer' : strEncode(result[20])
+                                          , 'PLZOrt' : strEncode(result[21])
+                                          }
                       #, '' : result[]
                       }
     return jsonify( alarmdepesche)

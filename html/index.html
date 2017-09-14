@@ -17,29 +17,29 @@
   <div class="module2 top-center ">
 
    <div class="border-bottom padding-bottom margin-bottom largerer moduleHeader">
-    Alarmdepesche {{ dicAlarmdepesche.AlarmiertesEinsatzmittel }} 
+    Alarmdepesche {{ dicAlarmdepesche.Default.AlarmiertesEinsatzmittel }} 
    </div>
 
-   <div class="larger" ng-if="dicAlarmdepesche.id">
-     <div class="moduleLine">
+   <div class="larger">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Default.Einsatzstichwort">
       <div class="moduleCellLeft"> Einsatzstichwort: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Einsatzstichwort }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Einsatzstichwort }} </div>
      </div>
-     <div class="moduleLine">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Default.AlarmiertesEinsatzmittel">
       <div class="moduleCellLeft"> Alarmiertes Einsatzmittel: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.AlarmiertesEinsatzmittel }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.AlarmiertesEinsatzmittel }} </div>
      </div>
-     <div class="moduleLine">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Default.Sondersignal">
       <div class="moduleCellLeft"> Sondersignal: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Sondersignal }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Sondersignal }} </div>
      </div>
-     <div class="moduleLine">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Default.Einsatzbeginn">
       <div class="moduleCellLeft"> Einsatzbeginn(Soll): </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Einsatzbeginn }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Einsatzbeginn }} </div>
      </div>
-     <div class="moduleLine">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Default.Einsatznummer">
       <div class="moduleCellLeft"> Einsatznummer: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Einsatznummer }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Einsatznummer }} </div>
      </div>
    </div>
 
@@ -47,50 +47,78 @@
     Einsatzziel
    </div>
 
-   <div class="larger" ng-if="dicAlarmdepesche.id">
-     <div class="moduleLine">
+   <div class="larger">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Target.Objekt">
       <div class="moduleCellLeft"> Objekt: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Objekt }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Target.Objekt }} </div>
      </div>
-     <div class="moduleLine">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Target.Objekttyp">
       <div class="moduleCellLeft"> Objekttyp: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Objekttyp }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Target.Objekttyp }} </div>
      </div>
-     <div class="moduleLine">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Target.StrasseHausnummer">
       <div class="moduleCellLeft"> Strasse / Hausnummer: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.StrasseHausnummer }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Target.StrasseHausnummer }} </div>
      </div>
-     <div class="moduleLine">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Target.Segment">
       <div class="moduleCellLeft"> Segment: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Segment }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Target.Segment }} </div>
      </div>
-     <div class="moduleLine">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Target.PLZOrt">
       <div class="moduleCellLeft"> PLZ / Ort: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.PLZOrt }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Target.PLZOrt }} </div>
      </div>
-     <div class="moduleLine">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Target.Region">
       <div class="moduleCellLeft"> Region: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Region }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Target.Region }} </div>
      </div>
-     <div class="moduleLine">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Target.Info">
       <div class="moduleCellLeft"> Info: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Info }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Target.Info }} </div>
      </div>
    </div>
-   
+  
+   <div class="border-bottom padding-bottom margin-bottom largerer moduleHeader">
+    Transportziel
+   </div>
+
+   <div class="larger">
+     <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.Objekt">
+      <div class="moduleCellLeft"> Objekt: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.Objekt }} </div>
+     </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.Objekttyp">
+      <div class="moduleCellLeft"> Objekttyp: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.Objekttyp }} </div>
+     </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.StrasseHausnummer">
+      <div class="moduleCellLeft"> Strasse / Hausnummer: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.StrasseHausnummer }} </div>
+     </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.PLZOrt">
+      <div class="moduleCellLeft"> PLZ / Ort: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.PLZOrt }} </div>
+     </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.Transportziel">
+      <div class="moduleCellLeft"> Transportziel: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.Transportziel }} </div>
+     </div>
+
+
+   </div>
 
    <div class="border-bottom padding-bottom margin-bottom largerer moduleHeader">
     GMA
    </div>
 
-   <div class="larger" ng-if="dicAlarmdepesche.id">
+   <div class="larger" ng-if="dicAlarmdepesche.Default.Name">
      <div class="moduleLine">
       <div class="moduleCellLeft"> Name: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Name }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Name }} </div>
      </div>
      <div class="moduleLine">
       <div class="moduleCellLeft"> Zusatz: </div>
-      <div class="moduleCellRight"> {{ dicAlarmdepesche.Zusatz }} </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Zusatz }} </div>
      </div>
    </div>
   </div>
