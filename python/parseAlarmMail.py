@@ -185,10 +185,7 @@ def createSQLFromDict ( lastMailID, dicAlarmdepesche ):
   sqlQuery += "\""+getDictValueByKey('Region', subDicAlarmdepesch)+"\","
   sqlQuery += "\""+getDictValueByKey('Info', subDicAlarmdepesch)+"\","
   # TransportTarget
-  subDicAlarmdepesch = dicAlarmdepesche['TransportTarget'] if 'TransportTarget' in dicAlarmdepesche else {}
-#    subDicAlarmdepesch = dicAlarmdepesche['TransportTarget']
-#  else:
-#    subDicAlarmdepesch = {}
+  subDicAlarmdepesch = dicAlarmdepesche['Transportziel'] if 'Transportziel' in dicAlarmdepesche else {}
   sqlQuery += "\""+getDictValueByKey('Transportziel', subDicAlarmdepesch)+"\","
   sqlQuery += "\""+getDictValueByKey('Objekt', subDicAlarmdepesch)+"\","
   sqlQuery += "\""+getDictValueByKey('Objekttyp', subDicAlarmdepesch)+"\","
