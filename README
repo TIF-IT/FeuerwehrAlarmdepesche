@@ -92,6 +92,8 @@
 
 ## Test
 
+     $ docker run -it --rm --pid=host -v LOCAL_APP_FOLDER:/usr/FeuerwehrAlarmdepesche/app my-python-app bash
+or
      $ docker run -it --rm --pid=host my-python-app bash
 
 

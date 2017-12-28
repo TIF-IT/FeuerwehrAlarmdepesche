@@ -20,7 +20,10 @@ RUN apt-get update -y && \
 #    pip install flask-cors && \
 #    pip install MySQL-python
 
+# Dev
+RUN apt-get install -y vim 
+
 #COPY python/parseAlarmMail.py .
 
-#CMD [ "sh", "/usr/FeuerwehrAlarmdepesche/start.sh" ]
-CMD [ "sh", "/usr/FeuerwehrAlarmdepesche/app/parseAlarmMail.py" ]
+CMD [ "sh", "/usr/FeuerwehrAlarmdepesche/start.sh" ]
+#CMD [ "sh", "/usr/FeuerwehrAlarmdepesche/app/parseAlarmMail.py" ]

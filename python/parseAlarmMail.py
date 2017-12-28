@@ -14,7 +14,7 @@ import alarmdepescheconfig as config
 from bs4 import BeautifulSoup
 import MySQLdb
 import time
-import requests
+#import requests
 #from OpenSSL import crypto
 #from OpenSSL import SSL as ossl
 
@@ -56,8 +56,8 @@ availableAlarmdepescheTransportTarget = { 'Transportziel':'Transportziel'
 # https://stackoverflow.com/questions/25318012/how-to-connect-with-python-imap4-ssl-and-self-signed-server-ssl-cert
 
 def getLastMail ():
-  //ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv3)
-  //ctx = ssl.SSLContext(PROTOCOL_SSLv3)
+  #ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv3)
+  #ctx = ssl.SSLContext(PROTOCOL_SSLv3)
   #passwd = getpass.getpass()
   mail =  imaplib.IMAP4_SSL(config.imap['host'], config.imap['port'])
   mail.login(config.imap['user'], config.imap['passwd'])
@@ -73,6 +73,8 @@ def getLastMail ():
   latest_email_id = id_list[-1] # get the latest
 
   result, data = mail.fetch(latest_email_id, "(RFC822)") # fetch the email body (RFC822) for the given ID
+
+  print ("Data: " + str(data[0][1]))
 
   f = FeedParser()
   f.feed(data[0][1])

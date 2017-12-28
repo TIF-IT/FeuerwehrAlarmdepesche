@@ -4,4 +4,4 @@ bs4
 lxml
 flask
 flask-cors
-
+mysqlclient
