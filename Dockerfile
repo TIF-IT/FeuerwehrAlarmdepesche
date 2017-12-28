@@ -1,5 +1,7 @@
 FROM python:3
 
+ENV DB_PASSWORD ChangeMe
+
 WORKDIR /usr/FeuerwehrAlarmdepesche
 
 COPY ./start.sh .
@@ -9,10 +11,9 @@ COPY python/parseAlarmMail.py app/
 COPY python/requirements.txt app/
 RUN apt-get update -y && \
     apt-get install -y python-pip python-dev libmysqlclient-dev && \
-    pip install --no-cache-dir -U -r app/requirements.txt && \
-    debconf-set-selections <<< 'mysql-server mysql-server/root_password password your_password'&& \
-    debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password your_password'&& \ 
-    apt-get -y install mysql-server
+    pip install --no-cache-dir -U -r app/requirements.txt 
+RUN export DEBIAN_FRONTEND=noninteractive ; \
+    apt-get install -y mysql-server
 #RUN pip install --upgrade pip && \
 #    pip install imaplib3 && \
 #    pip install beautifulsoup4 && \
@@ -23,9 +24,10 @@ RUN apt-get update -y && \
 #    pip install flask-cors && \
 #    pip install MySQL-python
 
-RUN /usr/bin/mysqld_safe & 
+#RUN /usr/bin/mysqld_safe > /dev/null 2>&1 & 
 COPY dbinit.sql .
-RUN mysql -u root -palarm < dbinit.sql
+#RUN mysqladmin -u root password $DB_PASSWORD && \
+#RUN  sleep 6;  mysql -u root < dbinit.sql
 
 # Dev
 RUN apt-get install -y vim 

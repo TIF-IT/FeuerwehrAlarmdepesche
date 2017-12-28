@@ -75,7 +75,7 @@ def getLastMail ():
   result, data = mail.fetch(latest_email_id, "(RFC822)") # fetch the email body (RFC822) for the given ID
 
   mailBody = data[0][1].decode("utf-8")
-
+  f = FeedParser()  
   f.feed(mailBody)
   rootMessage = f.close()
 
