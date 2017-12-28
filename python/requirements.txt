@@ -1,0 +1,7 @@
+beautifulsoup4
+HTMLParser
+bs4
+lxml
+flask
+flask-cors
+

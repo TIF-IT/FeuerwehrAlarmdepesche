@@ -85,3 +85,18 @@
 
      $ rsync -avz ./html/* /var/www/html/Alarmdepesche/
 
+# Docker
+
+     $ docker build -t my-python-app docker/
+     $ docker run -it --rm --pid=host my-python-app
+
+## Test
+
+     $ docker run -it --rm --pid=host my-python-app bash
+
+
+## Single instance
+
+     $ docker run -it --rm --name my-running-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp python:2 python your-daemon-or-script.py
+     $ docker run -it --rm --name my-running-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp python:3 python your-daemon-or-script.py
+
