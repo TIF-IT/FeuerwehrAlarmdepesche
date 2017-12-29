@@ -90,7 +90,7 @@ def getLastMail ():
   mail.logout()
   del mail
 
-  return (latest_email_id, mailBody.decode("utf-8"))
+  return (int.from_bytes(latest_email_id, byteorder='big'), mailBody.decode("utf-8"))
 
 # =====================================================
 
@@ -180,7 +180,7 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
     row_count = cursor.rowcount
     if row_count == 0:
       print ("Found new Alarmdepesche")
-#      print (sqlAlarmdepesche) #.decode('utf-8', 'ignore'))
+      print (sqlAlarmdepesche) #.decode('utf-8', 'ignore'))
       cursor.execute(sqlAlarmdepesche)
       db.commit()
     else:
@@ -204,6 +204,7 @@ def runCheckup ():
   if lastMailID != 0:
     dicAlarmdepesche    = interpretHTMLAlarmdepesche ( mailBody )
     sqlAlarmdepesche     = createSQLFromDict ( lastMailID, dicAlarmdepesche )
+    print (lastMailID)
     insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche )
 
 if __name__ == "__main__":

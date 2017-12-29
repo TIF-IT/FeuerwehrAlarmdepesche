@@ -4,6 +4,7 @@ from flask import Flask, jsonify
 import MySQLdb
 import alarmdepescheconfig as config
 import urllib
+import json
 
 from flask_cors import CORS, cross_origin
 
@@ -62,9 +63,9 @@ def get_tasks():
     #print (type(test))
 
     alarmdepesche = { 'Default': { 'id'               : result[0]
-                                 , 'dbIN'             : result[1]
+                                 , 'dbIN'             : str(result[1])
                                  , 'messageID'        : result[2]
-                                 , 'Einsatzstichwort' : strEncode(result[3])
+                                 , 'Einsatzstichwort' : result[3]
                                  , 'AlarmiertesEinsatzmittel' : strEncode(result[4])
                                  , 'Sondersignal' : strEncode(result[5])
                                  , 'Einsatzbeginn' : strEncode(result[6])
@@ -88,7 +89,9 @@ def get_tasks():
                                           }
                       #, '' : result[]
                       }
-    return jsonify( alarmdepesche)
+
+    return (json.dumps(alarmdepesche, ensure_ascii=False))
+    #return jsonify( alarmdepesche)
 
 #@app.route('/todo/api/v1.0/tasks', methods=['GET'])
 #def get_tasks():
