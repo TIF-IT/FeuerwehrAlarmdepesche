@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+
 WORK_DIR_PYTHON=/usr/FeuerwehrAlarmdepesche/app/
 #
 /usr/bin/mysqld_safe &

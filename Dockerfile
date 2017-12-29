@@ -4,7 +4,7 @@ ENV DB_PASSWORD ChangeMe
 
 WORKDIR /usr/FeuerwehrAlarmdepesche
 
-COPY ./start.sh .
+COPY ./dockerInternalStart.sh start.sh
 RUN mkdir app
 COPY python/alarmdepescheconfig.py app/
 COPY python/parseAlarmMail.py app/
