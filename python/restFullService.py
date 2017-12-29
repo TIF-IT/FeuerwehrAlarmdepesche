@@ -9,7 +9,7 @@ from flask_cors import CORS, cross_origin
 
 import sys
 
-reload(sys)
+#reload(sys)
 sys.getdefaultencoding()
 
 print (sys.getfilesystemencoding())
@@ -57,7 +57,7 @@ def get_tasks():
 
     #print urllib.quote(unicode(result[3], "utf-8")) # result[3].encode('ascii').encode('utf-8'))
     #test = result[3].decode('utf-8', 'ignore').strip().encode('utf-8')
-    test = result[3].decode('utf-8', 'ignore')
+    #test = result[3].decode('utf-8', 'ignore')
     #print (urllib.quote(test))
     #print (type(test))
 

@@ -90,7 +90,7 @@ def getLastMail ():
   mail.logout()
   del mail
 
-  return (latest_email_id, mailBody)
+  return (latest_email_id, mailBody.decode("utf-8"))
 
 # =====================================================
 
@@ -196,8 +196,10 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
 def runCheckup ():
   print ("Check for mail")
 
-  lastMailID, mailBody = getDummyMailBody ()
-  #lastMailID, mailBody = getLastMail ()
+  #lastMailID, mailBody = getDummyMailBody ()
+  lastMailID, mailBody = getLastMail ()
+
+  print ("MailBody: " + mailBody)
 
   if lastMailID != 0:
     dicAlarmdepesche    = interpretHTMLAlarmdepesche ( mailBody )
@@ -205,6 +207,6 @@ def runCheckup ():
     insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche )
 
 if __name__ == "__main__":
-    while True:
+#    while True:
       runCheckup ()
-time.sleep(int(config.imap['checkIntervall']))
+#time.sleep(int(config.imap['checkIntervall']))
