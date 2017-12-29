@@ -55,6 +55,10 @@ availableAlarmdepescheTransportTarget = { 'Transportziel':'Transportziel'
 
 # https://stackoverflow.com/questions/25318012/how-to-connect-with-python-imap4-ssl-and-self-signed-server-ssl-cert
 
+def getDummyMailBody ():
+  file = open("/usr/FeuerwehrAlarmdepesche/app/Steinbachhallenberg.html", "r") 
+  return (999, file.read() )
+
 def getLastMail ():
   #ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv3)
   #ctx = ssl.SSLContext(PROTOCOL_SSLv3)
@@ -74,9 +78,9 @@ def getLastMail ():
 
   result, data = mail.fetch(latest_email_id, "(RFC822)") # fetch the email body (RFC822) for the given ID
 
-  mailBody = data[0][1].decode("utf-8")
+  rawMailBody = data[0][1].decode("utf-8")
   f = FeedParser()  
-  f.feed(mailBody)
+  f.feed(rawMailBody)
   rootMessage = f.close()
 
   mailBody=rootMessage.get_payload(1).get_payload(decode=True)
@@ -191,7 +195,10 @@ def insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche ):
 
 def runCheckup ():
   print ("Check for mail")
-  lastMailID, mailBody = getLastMail ()
+
+  lastMailID, mailBody = getDummyMailBody ()
+  #lastMailID, mailBody = getLastMail ()
+
   if lastMailID != 0:
     dicAlarmdepesche    = interpretHTMLAlarmdepesche ( mailBody )
     sqlAlarmdepesche     = createSQLFromDict ( lastMailID, dicAlarmdepesche )
