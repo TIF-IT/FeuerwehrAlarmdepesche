@@ -7,8 +7,8 @@ WORK_DIR_PYTHON=/usr/FeuerwehrAlarmdepesche/app/
 sleep 5
 mysql -u root < dbinit.sql
 python ${WORK_DIR_PYTHON}/parseAlarmMail.py & 
-python ${WORK_DIR_PYTHON}/restFullService.py &
 #
-
+python ${WORK_DIR_PYTHON}/restFullService.py 
+#
 #
 #
