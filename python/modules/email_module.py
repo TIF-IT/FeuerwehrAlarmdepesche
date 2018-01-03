@@ -1,7 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from registry import ModuleRegistry, Api
+import sys
+try:
+    from registry import ModuleRegistry, Api
+except ModuleNotFoundError:
+    sys.path.append('.')
+    from registry import ModuleRegistry, Api
 import imaplib
 import socket
 try:
@@ -13,7 +18,6 @@ import alarmdepescheconfig as config
 from bs4 import BeautifulSoup
 import MySQLdb
 import time
-import sys
 
 
 availableAlarmdepescheDefault = { 'Einsatzstichwort':'Einsatzstichwort'
@@ -25,7 +29,6 @@ availableAlarmdepescheDefault = { 'Einsatzstichwort':'Einsatzstichwort'
                            , 'Einsatznummer':'Einsatznummer'
                            , 'Name':'Name'
                            , 'Zusatz':'Zusatz'
-#                           , '':''
                            }
 # Einsatzziel
 availableAlarmdepescheOperationTarget = { 'Objekt':'Objekt:'
@@ -52,7 +55,7 @@ class EmailModule(Api):
     """
 
     def getDummyMailBody ():
-      file = open("vorlagen/Steinbachhallenberg.html", "r")
+      file = open("../vorlagen/Steinbachhallenberg.html", "r")
       return (999, file.read() )
 
 

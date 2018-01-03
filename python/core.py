@@ -4,7 +4,6 @@
 from registry import ModuleRegistry
 import imaplib
 import socket
-#import ssl
 try:
   from HTMLParser import HTMLParser
 except ModuleNotFoundError as e:
@@ -17,26 +16,40 @@ import time
 
 class Core:
     def __init__(self):
-        print('init Core')
         self.modules = []
         self.on_input_list = []
         self.on_output_list = []
+        try:
+            self.db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
+        except Exception as e:
+            print(e)
+            raise Exception("Error at connecting to database")
+        print('create modules %s' % ModuleRegistry.get_objects())
         for o in ModuleRegistry.get_objects():
             n = o(self)
+            print('create %s' % n)
             n.config()
             self.modules.append(n)
         for o in self.modules:
             o.write_to_db()
 
 
+    def __del__(self):
+        if hasattr(self, 'db'):
+            self.db.close()
+
+
     def register_to_input(self, f):
         self.on_input_list.append(f)
+
+
+    def get_db_connection(self):
+        return self.db
 
 
     def get_instance(self, module_class):
         for x in self.modules:
             if x.__class__ is module_class:
-                print('found %s' % x)
                 return x
         return None
 
@@ -104,31 +117,27 @@ class Core:
     def insertAlarmdepescheIntoDB(self, dicAlarmdepesche, sqlAlarmdepesche):
       # config.mysql['host'] , user, passwd, dbName
       # https://www.tutorialspoint.com/python/python_database_access.htm
-      db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
-      cursor = db.cursor()
+      cursor = self.db.cursor()
       try:
         subDicAlarmdepesch = dicAlarmdepesche['Default'] if 'Default' in dicAlarmdepesche else {"Einsatznummer":0}
         sqlStatement = "select id from Alarmdepesche where Einsatznummer='"+subDicAlarmdepesch["Einsatznummer"]+"';"
-        #print "Select> "+sqlStatement
         cursor.execute(sqlStatement)
         results = cursor.fetchall()
       except Exception as e:
         print(e)
         print ("!Error in select sql statement")
       try:
-        #print results
+        # print results
         row_count = cursor.rowcount
         if row_count == 0:
           print ("Found new Alarmdepesche")
-    #      print (sqlAlarmdepesche) #.decode('utf-8', 'ignore'))
+          # print (sqlAlarmdepesche) #.decode('utf-8', 'ignore'))
           cursor.execute(sqlAlarmdepesche)
-          db.commit()
+          self.db.commit()
         else:
           print ("The Alarmdepesche is already existing")
-      #except:
-      except Exception as e:
+      except Exception as e:  # TODO: catch only DB exception
         print(e)
         print ("!Error in mysql statement")
-        db.rollback()
+        self.db.rollback()
 
-      db.close()
