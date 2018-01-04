@@ -18,7 +18,7 @@ RUN apt-get update -y && \
     apt-get install -y python-pip python-dev libmysqlclient-dev screen && \
     pip install --no-cache-dir -U -r app/requirements.txt
 RUN export DEBIAN_FRONTEND=noninteractive ; \
-    apt-get install -y mysql-server
+    apt-get install -y mysql-server apache2
 
 COPY dbinit.sql .
 

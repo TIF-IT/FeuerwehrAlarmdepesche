@@ -208,6 +208,6 @@ def runCheckup ():
     insertAlarmdepescheIntoDB ( dicAlarmdepesche, sqlAlarmdepesche )
 
 if __name__ == "__main__":
-#    while True:
+    while True:
       runCheckup ()
-#time.sleep(int(config.imap['checkIntervall']))
+      time.sleep(int(config.imap['checkIntervall']))
