@@ -2,11 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-try:
-    from registry import ModuleRegistry, Api
-except ModuleNotFoundError:
-    sys.path.append('.')
-    from registry import ModuleRegistry, Api
+from Alarmdepesche.registry import ModuleRegistry, Api
 import imaplib
 import socket
 try:
@@ -14,7 +10,7 @@ try:
 except ModuleNotFoundError as e:
   from html.parser import HTMLParser
 from email.parser import FeedParser
-import alarmdepescheconfig as config
+import Alarmdepesche.alarmdepescheconfig as config
 from bs4 import BeautifulSoup
 import MySQLdb
 import time

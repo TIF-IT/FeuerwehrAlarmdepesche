@@ -1,57 +1,35 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from registry import ModuleRegistry, Api
+from Alarmdepesche.registry import ModuleRegistry, Api
 
 import MySQLdb
-import alarmdepescheconfig as config
+import Alarmdepesche.alarmdepescheconfig as config
 import urllib
 import json
+import sys
 import _thread
 
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from flask import Flask, jsonify
+from flask_cors import CORS, cross_origin
 
-import sys
 
+app = Flask(__name__)
+
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+cors = CORS(app, resources={r"/api/v1.0/Alarmdepesche": {"origins": "*"}})
 
 @ModuleRegistry.register
-class HtmlModule(BaseHTTPRequestHandler, Api):
-    instance = None
-
-    def __init__(self, *argv):
-        if len(argv) == 1:
-            if not HtmlModule.instance:
-                Api.__init__(self, *argv)
-                HtmlModule.instance = self
-            else:
-                Api.__init__(HtmlModule.instance, *argv)
-        else:
-            if not HtmlModule.instance:
-                BaseHTTPRequestHandler.__init__(self, *argv)
-                HtmlModule.instance = self
-            else:
-                BaseHTTPRequestHandler.__init__(HtmlModule.instance, *argv)
-
-
-    def _set_headers(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
-
-
-    def do_GET(self):
-        self._set_headers()
-        self.wfile.write(str.encode(self.get_tasks()))
-
-
-    def strEncode (self, _in):
-        return _in
-
+class HtmlModule(Api):
 
     def config(self):
-        server_address = ('', 8080)
-        httpd = HTTPServer(server_address, HtmlModule)
-        _thread.start_new_thread(httpd.serve_forever, (None,))
+        app.add_url_rule('/api/v1.0/Alarmdepesche', methods=['GET'], view_func=self.get_tasks)
+        _thread.start_new_thread(app.run, tuple(), {'host': '0.0.0.0', 'threaded': True})
+
+
+    def strEncode(self, _in):
+      return _in
 
 
     def get_tasks(self):
@@ -94,7 +72,7 @@ class HtmlModule(BaseHTTPRequestHandler, Api):
                                               , 'StrasseHausnummer' : self.strEncode(result[20])
                                               , 'PLZOrt' : self.strEncode(result[21])
                                               }
-                          }
+                        }
 
         return json.dumps(alarmdepesche, ensure_ascii=False)
 
