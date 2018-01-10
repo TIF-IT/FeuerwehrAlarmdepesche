@@ -50,16 +50,32 @@ class EmailModule(Api):
     Email module
     """
 
-    def getDummyMailBody ():
+    def config(self):
+        while True:
+            self.runCheckup()
+            time.sleep(int(config.imap['checkIntervall']))
+
+
+    def runCheckup(self):
+        print ("Check for mail")
+        lastMailID, mailBody = self.getLastMail()
+
+        print ("MailBody: " + mailBody)
+        if lastMailID != 0:
+            dicAlarmdepesche = self.interpretHTMLAlarmdepesche(mailBody)
+            self.new_alarm(lastMailID, dicAlarmdepesche)
+
+
+    def getDummyMailBody():
       file = open("../vorlagen/Steinbachhallenberg.html", "r")
       return (999, file.read() )
 
 
-    def getLastMail ():
+    def getLastMail(self):
       #ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv3)
       #ctx = ssl.SSLContext(PROTOCOL_SSLv3)
       #passwd = getpass.getpass()
-      mail =  imaplib.IMAP4_SSL(config.imap['host'], config.imap['port'])
+      mail = imaplib.IMAP4_SSL(config.imap['host'], config.imap['port'])
       mail.login(config.imap['user'], config.imap['passwd'])
       mail.select(config.imap['mailBox'], 1)
 

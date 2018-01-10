@@ -25,7 +25,7 @@ class HtmlModule(Api):
 
     def config(self):
         app.add_url_rule('/api/v1.0/Alarmdepesche', methods=['GET'], view_func=self.get_tasks)
-        _thread.start_new_thread(app.run, tuple(), {'host': '0.0.0.0', 'threaded': True})
+        app.run(host='0.0.0.0', threaded=True)
 
 
     def strEncode(self, _in):

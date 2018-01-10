@@ -13,6 +13,7 @@ import Alarmdepesche.alarmdepescheconfig as config
 from bs4 import BeautifulSoup
 import MySQLdb
 import time
+import _thread
 
 class Core:
     def __init__(self):
@@ -28,7 +29,7 @@ class Core:
         for o in ModuleRegistry.get_objects():
             n = o(self)
             print('create %s' % n)
-            n.config()
+            _thread.start_new_thread(n.config, tuple())
             self.modules.append(n)
         for o in self.modules:
             o.write_to_db()
