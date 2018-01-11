@@ -12,14 +12,6 @@ class Api:
         pass
 
 
-    def write_to_db(self):
-        pass
-
-
-    def read_from_db(self):
-        pass
-
-
     def get_db_connection(self):
         return self.__core.get_db_connection()
 

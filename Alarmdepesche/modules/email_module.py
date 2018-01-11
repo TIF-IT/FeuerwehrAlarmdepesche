@@ -104,7 +104,7 @@ class EmailModule(Api):
       return (latest_email_id, mailBody.decode("utf-8"))
 
 
-    def interpretHTMLAlarmdepesche(htmlAlarmdepesche):
+    def interpretHTMLAlarmdepesche(self, htmlAlarmdepesche):
       soup = BeautifulSoup(htmlAlarmdepesche, "lxml")
       table = soup.find("table", attrs={})
 

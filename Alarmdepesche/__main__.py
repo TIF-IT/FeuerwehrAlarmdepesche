@@ -4,6 +4,7 @@
 from Alarmdepesche.core import Core
 from Alarmdepesche.modules import email_module
 from Alarmdepesche.modules import html_module
+from Alarmdepesche.modules import database_module
 
 if __name__ == '__main__':
     c = Core()
