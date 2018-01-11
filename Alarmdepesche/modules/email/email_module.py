@@ -66,8 +66,8 @@ class EmailModule(Api):
             self.new_alarm(lastMailID, dicAlarmdepesche)
 
 
-    def getDummyMailBody():
-      file = open("../vorlagen/Steinbachhallenberg.html", "r")
+    def getDummyMailBody(self):
+      file = open("vorlagen/Steinbachhallenberg.html", "r", encoding='utf-8')
       return (999, file.read() )
 
 
@@ -137,13 +137,4 @@ class EmailModule(Api):
 
       return foundAlarmdepesche
 
-
-if __name__ == '__main__':
-    from core import Core
-    c = Core()
-    obj = c.get_instance(EmailModule)
-    assert obj
-    lastMailID, mailBody = EmailModule.getDummyMailBody()
-    dicAlarmdepesche = EmailModule.interpretHTMLAlarmdepesche(mailBody)
-    obj.new_alarm(lastMailID, dicAlarmdepesche)
 

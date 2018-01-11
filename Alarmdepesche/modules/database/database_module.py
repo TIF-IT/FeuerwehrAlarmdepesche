@@ -10,9 +10,11 @@ class DBModule(Api):
     def config(self):
         self.register_to_input(self.on_new_alarm)
 
+
     def on_new_alarm(self, message_id, dicAlarmdepesche):
         sqlAlarmdepesche = self.createSQLFromDict(message_id, dicAlarmdepesche)
         self.insertAlarmdepescheIntoDB(dicAlarmdepesche, sqlAlarmdepesche)
+
 
     def createSQLFromDict(self, lastMailID, dicAlarmdepesche):
       sqlQuery = ""
