@@ -11,11 +11,6 @@ import MySQLdb
 class DBModule(Api):
     def config(self):
       self.register_to_input(self.on_new_alarm)
-      try:
-        self.db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
-      except Exception as e:
-        print(e)
-        raise Exception("Error at connecting to database")
 
 
 
@@ -79,6 +74,8 @@ class DBModule(Api):
     def insertAlarmdepescheIntoDB(self, dicAlarmdepesche, sqlAlarmdepesche):
       # config.mysql['host'] , user, passwd, dbName
       # https://www.tutorialspoint.com/python/python_database_access.htm
+      self.db = self.get_db_connection()
+
       cursor = self.db.cursor()
       try:
         subDicAlarmdepesch = dicAlarmdepesche['Default'] if 'Default' in dicAlarmdepesche else {"Einsatznummer":0}
@@ -102,3 +99,5 @@ class DBModule(Api):
         print(e)
         print ("!Error in mysql statement")
         self.db.rollback()
+
+      self.db.close()
