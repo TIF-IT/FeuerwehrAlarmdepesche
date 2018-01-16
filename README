@@ -88,14 +88,14 @@
 # Docker
 
      $ docker build -t feuerwehr-alarmdepesche .
-     $ docker run -it --rm --pid=host -p 5000:5000 feuerwehr-alarmdepesche
+     $ docker run -l feuerwehr-alarmdepesche-app -it --rm --pid=host -p 5000:5000 feuerwehr-alarmdepesche
 
 ## Test
 
-     $ docker run -it --rm --pid=host -p 5000:5000 -v LOCAL_APP_FOLDER:/usr/FeuerwehrAlarmdepesche/app feuerwehr-alarmdepesche bash
+     $ docker run -l feuerwehr-alarmdepesche-dev -it --rm --pid=host -p 5000:5000 -v LOCAL_APP_FOLDER:/usr/FeuerwehrAlarmdepesche/app feuerwehr-alarmdepesche bash
      $ /usr/bin/mysqld_safe & sleep 5; mysql -u root < dbinit.sql
 or
-     $ docker run -it --rm --pid=host feuerwehr-alarmdepesche bash
+     $ docker run -l feuerwehr-alarmdepesche-dev -it --rm --pid=host -p 5000:5000 feuerwehr-alarmdepesche bash
 
 
 ## Single instance
