@@ -59,7 +59,7 @@ class DBModule(Api):
       names += [target_pre + x for x in  target]
       names += [trans_pre + x for x in trans]
 
-      values = [str(lastMailID)]
+      values = [str(lastMailID.decode("utf-8"))]
       for x in names_list:
         for entry in combined[x]:
             values.append("\"" + dicAlarmdepesche.get(x, {}).get(entry, "") + "\"")
@@ -79,9 +79,6 @@ class DBModule(Api):
     def insertAlarmdepescheIntoDB(self, dicAlarmdepesche, sqlAlarmdepesche):
       # config.mysql['host'] , user, passwd, dbName
       # https://www.tutorialspoint.com/python/python_database_access.htm
-      print ("debug: ")
-      print (dicAlarmdepesche)
-      print (sqlAlarmdepesche)
       cursor = self.db.cursor()
       try:
         subDicAlarmdepesch = dicAlarmdepesche['Default'] if 'Default' in dicAlarmdepesche else {"Einsatznummer":0}
