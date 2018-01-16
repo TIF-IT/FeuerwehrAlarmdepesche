@@ -11,7 +11,7 @@ except ModuleNotFoundError as e:
 from email.parser import FeedParser
 import Alarmdepesche.alarmdepescheconfig as config
 from bs4 import BeautifulSoup
-import MySQLdb
+#import MySQLdb
 import time
 import _thread
 
@@ -20,11 +20,11 @@ class Core:
         self.modules = []
         self.on_input_list = []
         self.on_output_list = []
-        try:
-            self.db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
-        except Exception as e:
-            print(e)
-            raise Exception("Error at connecting to database")
+#        try:
+#            self.db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
+#        except Exception as e:
+#            print(e)
+#            raise Exception("Error at connecting to database")
         print('create modules %s' % ModuleRegistry.get_objects())
         for o in ModuleRegistry.get_objects():
             n = o(self)

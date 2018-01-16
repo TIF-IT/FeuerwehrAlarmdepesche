@@ -4,11 +4,19 @@
 from Alarmdepesche.registry import ModuleRegistry, Api
 import Alarmdepesche.alarmdepescheconfig as config
 
+import MySQLdb
+
 
 @ModuleRegistry.register
 class DBModule(Api):
     def config(self):
-        self.register_to_input(self.on_new_alarm)
+      self.register_to_input(self.on_new_alarm)
+      try:
+        self.db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
+      except Exception as e:
+        print(e)
+        raise Exception("Error at connecting to database")
+
 
 
     def on_new_alarm(self, message_id, dicAlarmdepesche):
@@ -71,6 +79,9 @@ class DBModule(Api):
     def insertAlarmdepescheIntoDB(self, dicAlarmdepesche, sqlAlarmdepesche):
       # config.mysql['host'] , user, passwd, dbName
       # https://www.tutorialspoint.com/python/python_database_access.htm
+      print ("debug: ")
+      print (dicAlarmdepesche)
+      print (sqlAlarmdepesche)
       cursor = self.db.cursor()
       try:
         subDicAlarmdepesch = dicAlarmdepesche['Default'] if 'Default' in dicAlarmdepesche else {"Einsatznummer":0}
