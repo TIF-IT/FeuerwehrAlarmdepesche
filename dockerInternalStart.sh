@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 
-WORK_DIR_PYTHON=/usr/FeuerwehrAlarmdepesche/app/
+WORK_DIR_PYTHON=/usr/FeuerwehrAlarmdepesche/python/
 #
 /usr/bin/mysqld_safe &
 sleep 5

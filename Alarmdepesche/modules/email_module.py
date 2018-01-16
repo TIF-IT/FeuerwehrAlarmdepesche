@@ -57,10 +57,10 @@ class EmailModule(Api):
 
 
     def runCheckup(self):
-        print ("Check for mail")
+        #print ("Check for mail")
         lastMailID, mailBody = self.getLastMail()
 
-        print ("MailBody: " + mailBody)
+        #print ("MailBody: " + mailBody)
         if lastMailID != 0:
             dicAlarmdepesche = self.interpretHTMLAlarmdepesche(mailBody)
             self.new_alarm(lastMailID, dicAlarmdepesche)
@@ -104,7 +104,7 @@ class EmailModule(Api):
       return (latest_email_id, mailBody.decode("utf-8"))
 
 
-    def interpretHTMLAlarmdepesche(htmlAlarmdepesche):
+    def interpretHTMLAlarmdepesche(self, htmlAlarmdepesche):
       soup = BeautifulSoup(htmlAlarmdepesche, "lxml")
       table = soup.find("table", attrs={})
 

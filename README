@@ -92,7 +92,7 @@
 
 ## Test
 
-     $ docker run -it --rm --pid=host -p 5000:5000 -v LOCAL_APP_FOLDER:/usr/FeuerwehrAlarmdepesche/app feuerwehr-alarmdepesche bash
+     $ docker run -it --rm --pid=host -p 5000:5000 -v LOCAL_APP_FOLDER:/usr/FeuerwehrAlarmdepesche/python feuerwehr-alarmdepesche bash
       $ /usr/bin/mysqld_safe & sleep 5; mysql -u root < dbinit.sql
 or
      $ docker run -it --rm --pid=host feuerwehr-alarmdepesche bash
@@ -102,4 +102,15 @@ or
 
      $ docker run -it --rm --name my-running-script -p 5000:5000 -v "$PWD":/usr/src/myapp -w /usr/src/myapp python:2 python your-daemon-or-script.py
      $ docker run -it --rm --name my-running-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp python:3 python your-daemon-or-script.py
+
+# The new core module concept
+
+     $ PYTHONPATH=./ python3 Alarmdepesche/__main__.py
+     $ python3 -m Alarmdepesche Alarmdepesche/__main__.py
+
+
+# Rest api call
+
+     $ curl "http://127.0.0.1:5000/api/v1.0/Alarmdepesche"
+
 
