@@ -33,12 +33,14 @@ class HtmlModule(Api):
 
 
     def get_tasks(self):
-        db = self.get_db_connection()
+        db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
+#        db = self.get_db_connection()
         cursor = db.cursor()
         try:
             sqlStatement = "select id, dbIN, messageID, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Target_Objekt, Target_Objekttyp, Target_StrasseHausnummer, Target_Segment, Target_PLZOrt, Target_Region, Target_Info, Name, Zusatz, TransTarget_Transportziel, TransTarget_Objekt, TransTarget_Objekttyp, TransTarget_StrasseHausnummer, TransTarget_PLZOrt from Alarmdepesche order by id desc limit 1";
             cursor.execute(sqlStatement)
             result = cursor.fetchone()
+            db.close()
         except:
             print ("!Error in mysql statement")
             return jsonify({'Error':'Error in mysql statement'})

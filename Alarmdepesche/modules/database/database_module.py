@@ -100,4 +100,4 @@ class DBModule(Api):
         print ("!Error in mysql statement")
         self.db.rollback()
 
-      self.db.close()
+      #self.db.close()
