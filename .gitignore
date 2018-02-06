@@ -1,3 +1,4 @@
 */alarmdepescheconfig.py
 *.pyc
 *.swp
+tmp/
