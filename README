@@ -117,3 +117,7 @@ or
      $ curl "http://127.0.0.1:5000/api/v1.0/Alarmdepesche"
 
 
+# OpenStreetMaps
+
+  - wget http://dev.openlayers.org/examples/osm-marker-popup.js
+  - wget https://github.com/openlayers/ol2/releases/download/release-2.13.1/OpenLayers-2.13.1.tar.gz

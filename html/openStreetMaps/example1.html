@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>OpenLayers Demo</title>
+    <style type="text/css">
+      html, body, #basicMap {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+      }
+    </style>
+    <script src="OpenLayers/OpenLayers.js"></script>
+    <script>
+      <!--  --> 
+      function init() {
+        map = new OpenLayers.Map("Map");
+        var mapnik         = new OpenLayers.Layer.OSM();
+        var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+        var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+        var position       = new OpenLayers.LonLat(13.41,52.52).transform( fromProjection, toProjection);
+        var zoom           = 15; 
+
+        map.addLayer(mapnik);
+
+        var markers = new OpenLayers.Layer.Markers( "Markers" );
+        map.addLayer(markers);
+        markers.addMarker(new OpenLayers.Marker(position));
+
+        var popup = new OpenLayers.Popup.FramedCloud("Popup",
+          myLocation.getBounds().getCenterLonLat(), null,
+          '<a target="_blank" href="http://openlayers.org/">We</a> ' +
+          'could be here.<br>Or elsewhere.', null,
+          true // <-- true if we want a close (X) button, false otherwise
+        );
+
+        map.addPopup(popup);
+
+
+        map.setCenter(position, zoom );
+      }
+    </script>
+  </head>
+  <body onload="init();">
+    <div id="Map" style="height:250px"></div>
+  </body>
+</html>
+
