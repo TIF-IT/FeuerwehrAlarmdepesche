@@ -7,6 +7,7 @@ WORKDIR /usr/FeuerwehrAlarmdepesche
 COPY ./dockerInternalStart.sh start.sh
 COPY Alarmdepesche /usr/FeuerwehrAlarmdepesche/Alarmdepesche
 #COPY vorlagen/Steinbachhallenberg.html /usr/FeuerwehrAlarmdepesche/
+COPY html/ /var/www/html/
 RUN apt-get update -y && \
     apt-get install -y python-pip python-dev libmysqlclient-dev screen && \
     pip install -U -r /usr/FeuerwehrAlarmdepesche/Alarmdepesche/requirements.txt
