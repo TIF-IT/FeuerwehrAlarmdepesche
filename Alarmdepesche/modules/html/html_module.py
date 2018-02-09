@@ -82,6 +82,7 @@ class HtmlModule(Api):
                                               , 'PLZOrt' : self.strEncode(result['TransTarget_PLZOrt'])
                                               , 'Region' : self.strEncode(result['TransTarget_Region'])
                                               , 'Info' : self.strEncode(result['TransTarget_Info'])
+                                              , 'Segment' : self.strEncode(result['TransTarget_Segment'])
                                               , 'Geopositionen' : self.strEncode(result['TransTarget_Geopositionen'])
                                               }
                         }

@@ -25,9 +25,17 @@
       <div class="moduleCellLeft"> Einsatzstichwort: </div>
       <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Einsatzstichwort }} </div>
      </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Default.Sachverhalt">
+      <div class="moduleCellLeft"> Sachverhalt: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Sachverhalt }} </div>
+     </div>
      <div class="moduleLine" ng-if="dicAlarmdepesche.Default.AlarmiertesEinsatzmittel">
       <div class="moduleCellLeft"> Alarmiertes Einsatzmittel: </div>
       <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.AlarmiertesEinsatzmittel }} </div>
+     </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Default.Patientenname">
+      <div class="moduleCellLeft"> Patientenname: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Patientenname }} </div>
      </div>
      <div class="moduleLine" ng-if="dicAlarmdepesche.Default.Sondersignal">
       <div class="moduleCellLeft"> Sondersignal: </div>
@@ -41,6 +49,19 @@
       <div class="moduleCellLeft"> Einsatznummer: </div>
       <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Einsatznummer }} </div>
      </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Default.Name">
+      <div class="moduleCellLeft"> Name: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Name }} </div>
+     </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Default.Zusatz">
+      <div class="moduleCellLeft"> Zusatz: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Zusatz }} </div>
+     </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Default.Auftragsnummer">
+      <div class="moduleCellLeft"> Auftragsnummer: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Default.Auftragsnummer }} </div>
+     </div>
+
    </div>
 
    <div class="border-bottom padding-bottom margin-bottom largerer moduleHeader">
@@ -76,6 +97,10 @@
       <div class="moduleCellLeft"> Info: </div>
       <div class="moduleCellRight"> {{ dicAlarmdepesche.Target.Info }} </div>
      </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.Target.Geopositionen">
+      <div class="moduleCellLeft"> Geopositionen: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.Target.Geopositionen }} </div>
+     </div>
    </div>
   
    <div class="border-bottom padding-bottom margin-bottom largerer moduleHeader">
@@ -95,6 +120,10 @@
       <div class="moduleCellLeft"> Strasse / Hausnummer: </div>
       <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.StrasseHausnummer }} </div>
      </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.Segment">
+      <div class="moduleCellLeft"> Segment: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.Segment }} </div>
+     </div>
      <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.PLZOrt">
       <div class="moduleCellLeft"> PLZ / Ort: </div>
       <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.PLZOrt }} </div>
@@ -102,6 +131,19 @@
      <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.Transportziel">
       <div class="moduleCellLeft"> Transportziel: </div>
       <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.Transportziel }} </div>
+     </div>
+
+     <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.Region">
+      <div class="moduleCellLeft"> Region: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.Region }} </div>
+     </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.Info">
+      <div class="moduleCellLeft"> Info: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.Info }} </div>
+     </div>
+     <div class="moduleLine" ng-if="dicAlarmdepesche.TransportTarget.Geopositionen">
+      <div class="moduleCellLeft"> Geopositionen: </div>
+      <div class="moduleCellRight"> {{ dicAlarmdepesche.TransportTarget.Geopositionen }} </div>
      </div>
 
 
