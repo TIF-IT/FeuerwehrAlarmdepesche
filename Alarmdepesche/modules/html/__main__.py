@@ -4,8 +4,9 @@
 from Alarmdepesche.core import Core
 from Alarmdepesche.modules.html import html_module
 
+from waiting import wait
+
 c = Core()
 obj = c.get_instance(html_module.HtmlModule)
 assert obj
-while True:
-    pass
+wait(lambda : False)
