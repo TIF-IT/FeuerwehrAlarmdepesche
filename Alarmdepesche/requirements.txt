@@ -5,3 +5,4 @@ lxml
 flask
 flask-cors
 mysqlclient
+pytest

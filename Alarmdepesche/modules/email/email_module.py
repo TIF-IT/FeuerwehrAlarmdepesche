@@ -23,6 +23,7 @@ availableAlarmdepescheDefault = { 'Einsatzstichwort':'Einsatzstichwort'
                            , 'Patientenname':'Patientenname'
                            , 'Einsatzbeginn':'Einsatzbeginn'
                            , 'Einsatznummer':'Einsatznummer'
+                           , 'Auftragsnummer':'Auftragsnummer'
                            , 'Name':'Name'
                            , 'Zusatz':'Zusatz'
                            }
@@ -34,13 +35,18 @@ availableAlarmdepescheOperationTarget = { 'Objekt':'Objekt:'
                                         , 'PLZOrt':'PLZ'
                                         , 'Region':'Region'
                                         , 'Info':'Info'
+                                        , 'Geopositionen':'Geopositionen'
                                         }
 #  Transportziel
 availableAlarmdepescheTransportTarget = { 'Transportziel':'Transportziel'
                                         , 'Objekt':'Objekt:'
                                         , 'Objekttyp':'Objekttyp'
                                         , 'StrasseHausnummer':'Strasse'
+                                        , 'Segment':'Segment'
                                         , 'PLZOrt':'PLZ'
+                                        , 'Region':'Region'
+                                        , 'Info':'Info'
+                                        , 'Geopositionen':'Geopositionen'
                                         }
 
 
@@ -134,6 +140,8 @@ class EmailModule(Api):
           for alarmdepItem in availableAlarmdepesche:
             if len(dataset) > 1 and availableAlarmdepesche[alarmdepItem] in dataset[0]:
               foundAlarmdepesche[identifier][alarmdepItem] = dataset[1].strip()
+
+      print (foundAlarmdepesche)
 
       return foundAlarmdepesche
 

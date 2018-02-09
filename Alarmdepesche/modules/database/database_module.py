@@ -32,6 +32,7 @@ class DBModule(Api):
                     "Name",
                     "Zusatz",
                     "Sachverhalt",
+                    "Auftragsnummer",
                     "Patientenname"]
       target     = ["Objekt",
                     "Objekttyp",
@@ -39,11 +40,16 @@ class DBModule(Api):
                     "Segment",
                     "PLZOrt",
                     "Region",
+                    "Geopositionen",
                     "Info"]
       trans      = ["Transportziel",
                     "Objekt",
                     "Objekttyp",
                     "StrasseHausnummer",
+                    "Segment",
+                    "Region",
+                    "Info",
+                    "Geopositionen",
                     "PLZOrt"]
       combined   = { names_list[0] : default,
                      names_list[1] : target,

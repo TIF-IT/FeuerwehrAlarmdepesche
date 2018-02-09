@@ -37,7 +37,7 @@ class HtmlModule(Api):
 #        db = self.get_db_connection()
         cursor = db.cursor()
         try:
-            sqlStatement = "select id, dbIN, messageID, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Einsatzbeginn, Einsatznummer, Target_Objekt, Target_Objekttyp, Target_StrasseHausnummer, Target_Segment, Target_PLZOrt, Target_Region, Target_Info, Name, Zusatz, TransTarget_Transportziel, TransTarget_Objekt, TransTarget_Objekttyp, TransTarget_StrasseHausnummer, TransTarget_PLZOrt from Alarmdepesche order by id desc limit 1";
+            sqlStatement = "select id, dbIN, messageID, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Sachverhalt, Auftragsnummer, Einsatzbeginn, Einsatznummer, Target_Objekt, Target_Objekttyp, Target_StrasseHausnummer, Target_Segment, Target_Region, Target_Geopositionen, Target_PLZOrt, Target_Region, Target_Info, Name, Zusatz, TransTarget_Transportziel, TransTarget_Objekt, TransTarget_Objekttyp, TransTarget_StrasseHausnummer, TransTarget_PLZOrt, TransTarget_Segment, TransTarget_Region, TransTarget_Info, TransTarget_Geopositionen from Alarmdepesche order by id desc limit 1";
             cursor.execute(sqlStatement)
             result = cursor.fetchone()
             db.close()
@@ -59,6 +59,7 @@ class HtmlModule(Api):
                                      , 'Einsatznummer' : self.strEncode(result[7])
                                      , 'Name' : self.strEncode(result[15])
                                      , 'Zusatz' : self.strEncode(result[16])
+                                     , 'Auftragsnummer' : self.strEncode(result[16])
                                      }
                         , 'Target' : { 'Objekt' : self.strEncode(result[8])
                                      , 'Objekttyp' : self.strEncode(result[9])
