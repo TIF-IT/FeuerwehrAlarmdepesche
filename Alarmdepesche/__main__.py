@@ -6,7 +6,9 @@ from Alarmdepesche.modules.email import email_module
 from Alarmdepesche.modules.html import html_module
 from Alarmdepesche.modules.database import database_module
 
+from waiting import wait
+
+
 if __name__ == '__main__':
     c = Core()
-    while True:
-        pass
+    wait(lambda : False)
