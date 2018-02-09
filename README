@@ -93,12 +93,12 @@
 ## Test
 
      $ docker run -l feuerwehr-alarmdepesche-dev -it --rm --pid=host -p 5080:80 -v "$PWD/html":/var/www/html -p 5000:5000 -v "$PWD":/usr/FeuerwehrAlarmdepesche/ feuerwehr-alarmdepesche bash
-
-     $ docker run -l feuerwehr-alarmdepesche-dev2 -it --rm --pid=host -p 5000:5000 -v LOCAL_APP_FOLDER:/usr/FeuerwehrAlarmdepesche feuerwehr-alarmdepesche bash
      $ /usr/bin/mysqld_safe & sleep 5; mysql -u root < dbinit.sql
      $ python3 -m Alarmdepesche Alarmdepesche/__main__.py
+     $ python3 -m Alarmdepesche.modules.email
 or
      $ docker run -l feuerwehr-alarmdepesche-dev -it --rm --pid=host -p 5000:5000 feuerwehr-alarmdepesche bash
+     $ docker run -l feuerwehr-alarmdepesche-dev2 -it --rm --pid=host -p 5000:5000 -v LOCAL_APP_FOLDER:/usr/FeuerwehrAlarmdepesche feuerwehr-alarmdepesche bash
 
 
 ## Single instance
