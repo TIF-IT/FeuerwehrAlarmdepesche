@@ -11,4 +11,3 @@ lastMailID, mailBody = obj.getDummyMailBody()
 dicAlarmdepesche = obj.interpretHTMLAlarmdepesche(mailBody)
 print (dicAlarmdepesche)
 obj.new_alarm(lastMailID, dicAlarmdepesche)
-assert 1 == 2
