@@ -88,11 +88,11 @@
 # Docker
 
      $ docker build -t feuerwehr-alarmdepesche .
-     $ docker run -l feuerwehr-alarmdepesche-app -it --rm --pid=host -p 5080:80 -p 5000:5000 feuerwehr-alarmdepesche
+     $ docker run -l feuerwehr-alarmdepesche-app -it --pid=host -p 5080:80 -p 5000:5000 feuerwehr-alarmdepesche
 
 ## Test
 
-     $ docker run -l feuerwehr-alarmdepesche-dev -it --rm --pid=host -p 5080:80 -v "$PWD/html":/var/www/html -p 5000:5000 -v "$PWD":/usr/FeuerwehrAlarmdepesche/ feuerwehr-alarmdepesche bash
+     $ docker run -l feuerwehr-alarmdepesche-dev -it --pid=host -p 5080:80 -v "$PWD/html":/var/www/html -p 5000:5000 -v "$PWD":/usr/FeuerwehrAlarmdepesche/ feuerwehr-alarmdepesche bash
      $ /usr/bin/mysqld_safe & sleep 5; mysql -u root < dbinit.sql
      $ python3 -m Alarmdepesche Alarmdepesche/__main__.py
      $ python3 -m Alarmdepesche.modules.email
