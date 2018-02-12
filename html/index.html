@@ -14,7 +14,7 @@
  </head>
  <!-- <body ng-controller="MagicMirror"> -->
  <body ng-controller="Alarmdepesche">
-  <div class="module2 top-center ">
+  <div class="moduleCellRight">
 
    <div class="border-bottom padding-bottom margin-bottom largerer moduleHeader">
     Alarmdepesche {{ dicAlarmdepesche.Default.AlarmiertesEinsatzmittel }} 
@@ -164,11 +164,43 @@
      </div>
    </div>
   </div>
+  <div id="Map" class="moduleCellRight" style="height:80%;width:50%;"></div>
 
   <script type="text/javascript" src="js/jquery-latest.js"></script>
   <script type="text/javascript" src="js/angular.min.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript" src="js/services/alarmdepesche.js"></script>
+	<script type="text/javascript" src="openStreetMaps/OpenLayers/OpenLayers.js"></script>
+	<script>
+		function init() {
+			map = new OpenLayers.Map("Map");
+			var mapnik         = new OpenLayers.Layer.OSM();
+			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+			var position       = new OpenLayers.LonLat(9.6075669, 48.9459301).transform( fromProjection, toProjection);
+			var zoom           = 15; 
+
+			map.addLayer(mapnik);
+
+			/*
+			var pois = new OpenLayers.Layer.Text( "My Points",
+									{ location:"./poi.txt",
+										projection: map.displayProjection
+									});
+			map.addLayer(pois);
+			*/
+
+			var layer_switcher= new OpenLayers.Control.LayerSwitcher({});
+			map.addControl(layer_switcher);
+
+
+			map.setCenter(position, zoom );
+		}
+		$( document ).ready(function() {
+  		init();
+			console.log("Map initialized");
+		});
+	</script>
   
  </body>
 </html>
