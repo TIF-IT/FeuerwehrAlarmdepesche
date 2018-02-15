@@ -10,10 +10,22 @@ body {
   height: 100%;
 	background: #000 no-repeat;
 	color: #fff;
-	font-size: 1.85em;
 	font-family: 'Quicksand', sans-serif;
   overflow: hidden;
   -webkit-font-smoothing: subpixel-antialiased;
+  font-size: 1.1em;
+}
+@media screen and (min-height: 700px) {
+  body { font-size: 1.3em; }
+}
+@media screen and (min-height: 800px) {
+  body { font-size: 1.45em; }
+}
+@media screen and (min-height: 900px) {
+  body { font-size: 1.65em; }
+}
+@media screen and (min-height: 1000px) {
+  body { font-size: 1.85em; }
 }
 
 .wrapper {
@@ -102,6 +114,8 @@ table.padding td {
 }
 .border-bottom {
 	border-bottom: 1px solid;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .event {
     white-space: nowrap;
