@@ -1,4 +1,5 @@
 */alarmdepescheconfig.py
+.pytest_cache/
 *.pyc
 *.swp
 tmp/
