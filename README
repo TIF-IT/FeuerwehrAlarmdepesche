@@ -94,6 +94,7 @@
 
      $ docker run -l feuerwehr-alarmdepesche-dev -it --pid=host -p 5080:80 -v "$PWD/html":/var/www/html -p 5000:5000 -v "$PWD":/usr/FeuerwehrAlarmdepesche/ feuerwehr-alarmdepesche bash
      $ /usr/bin/mysqld_safe & sleep 5; mysql -u root < dbinit.sql
+     $ mysql -u root FeuerwehrNotifications < vorlagen/oneMessage.sql
      $ python3 -m Alarmdepesche Alarmdepesche/__main__.py
      $ python3 -m Alarmdepesche.modules.email
 or
