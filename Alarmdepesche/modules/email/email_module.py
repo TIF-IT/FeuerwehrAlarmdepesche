@@ -73,7 +73,8 @@ class EmailModule(Api):
 
 
     def getDummyMailBody(self):
-      file = open("vorlagen/Steinbachhallenberg.html", "r", encoding='utf-8')
+      #file = open("vorlagen/Steinbachhallenberg.html", "r", encoding='utf-8')
+      file = open("vorlagen/Leinefelde_Test-Alarm.html", "r", encoding='utf-16')
       return (999, file.read() )
 
 
@@ -107,7 +108,8 @@ class EmailModule(Api):
       mail.logout()
       del mail
 
-      return (latest_email_id, mailBody.decode("utf-8"))
+      #return (latest_email_id, mailBody.decode("utf-8"))
+      return (latest_email_id, mailBody.decode("utf-16"))
 
 
     def interpretHTMLAlarmdepesche(self, htmlAlarmdepesche):
