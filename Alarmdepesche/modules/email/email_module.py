@@ -5,10 +5,10 @@ import sys
 from Alarmdepesche.registry import ModuleRegistry, Api
 import imaplib
 import socket
-try:
-  from HTMLParser import HTMLParser
-except ModuleNotFoundError as e:
-  from html.parser import HTMLParser
+#try:
+#  from HTMLParser import HTMLParser
+#except ModuleNotFoundError as e:
+from html.parser import HTMLParser
 from email.parser import FeedParser
 import Alarmdepesche.alarmdepescheconfig as config
 from bs4 import BeautifulSoup
@@ -74,7 +74,8 @@ class EmailModule(Api):
 
     def getDummyMailBody(self):
       #file = open("vorlagen/Steinbachhallenberg.html", "r", encoding='utf-8')
-      file = open("vorlagen/Leinefelde_Test-Alarm.html", "r", encoding='utf-16')
+      #file = open("vorlagen/Leinefelde_Test-Alarm.html", "r", encoding='utf-16')
+      file = open("vorlagen/Leinefelde_DemoGen.html", "r", encoding='utf-8')
       return (999, file.read() )
 
 
@@ -98,9 +99,13 @@ class EmailModule(Api):
       result, data = mail.fetch(latest_email_id, "(RFC822)") # fetch the email body (RFC822) for the given ID
 
       rawMailBody = data[0][1].decode("utf-8")
+      #rawMailBody = data[0][1]
+      print (rawMailBody)
       f = FeedParser()
       f.feed(rawMailBody)
       rootMessage = f.close()
+
+      print ("rootMessage: "+str(rootMessage.get_payload(0)))
 
       mailBody=rootMessage.get_payload(1).get_payload(decode=True)
 
@@ -108,8 +113,8 @@ class EmailModule(Api):
       mail.logout()
       del mail
 
-      #return (latest_email_id, mailBody.decode("utf-8"))
-      return (latest_email_id, mailBody.decode("utf-16"))
+      return (latest_email_id, mailBody.decode("utf-8"))
+      #return (latest_email_id, mailBody.decode("utf-16"))
 
 
     def interpretHTMLAlarmdepesche(self, htmlAlarmdepesche):
