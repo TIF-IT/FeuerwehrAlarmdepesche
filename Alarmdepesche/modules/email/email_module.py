@@ -96,18 +96,26 @@ class EmailModule(Api):
 
       result, data = mail.fetch(latest_email_id, "(RFC822)") # fetch the email body (RFC822) for the given ID
 
-      rawMailBody = data[0][1].decode("utf-8")
-      f = FeedParser()
-      f.feed(rawMailBody)
-      rootMessage = f.close()
+      #print ("Result mail fetch: "+str(result)+" Data: "+str(data))
 
-      mailBody=rootMessage.get_payload(1).get_payload(decode=True)
+  
 
-      mail.close()
-      mail.logout()
-      del mail
+      try:
+        rawMailBody = data[0][1].decode("utf-8")
+        f = FeedParser()
+        f.feed(rawMailBody)
+        rootMessage = f.close()
 
-      return (latest_email_id, mailBody.decode("utf-8"))
+        mailBody=rootMessage.get_payload(1).get_payload(decode=True)
+
+        mail.close()
+        mail.logout()
+        del mail
+        return (latest_email_id, mailBody.decode("utf-8"))
+      except:
+        print ("(ERROR) Mail body not, parsed encoding error?")
+        return (latest_email_id, "")
+      
 
 
     def interpretHTMLAlarmdepesche(self, htmlAlarmdepesche):

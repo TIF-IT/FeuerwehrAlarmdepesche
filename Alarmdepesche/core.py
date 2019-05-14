@@ -4,10 +4,10 @@
 from Alarmdepesche.registry import ModuleRegistry
 import imaplib
 import socket
-try:
-  from HTMLParser import HTMLParser
-except ModuleNotFoundError as e:
-  from html.parser import HTMLParser
+#try:
+#  from HTMLParser import HTMLParser
+#except ModuleNotFoundError as e:
+from html.parser import HTMLParser
 from email.parser import FeedParser
 import Alarmdepesche.alarmdepescheconfig as config
 from bs4 import BeautifulSoup
@@ -42,6 +42,13 @@ class Core:
         print('register input for %s' % f)
         self.on_input_list.append(f)
 
+    def reset_db_connection(self):
+        try:
+            self.db.close()
+            self.db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
+        except Exception as e:
+            print(e)
+            raise Exception("Error at reset connecting to database")
 
     def get_db_connection(self):
         return self.db

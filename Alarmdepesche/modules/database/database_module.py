@@ -80,6 +80,7 @@ class DBModule(Api):
     def insertAlarmdepescheIntoDB(self, dicAlarmdepesche, sqlAlarmdepesche):
       # config.mysql['host'] , user, passwd, dbName
       # https://www.tutorialspoint.com/python/python_database_access.htm
+      self.reset_db_connection()
       self.db = self.get_db_connection()
 
       cursor = self.db.cursor()
@@ -91,6 +92,7 @@ class DBModule(Api):
       except Exception as e:
         print(e)
         print ("!Error in select sql statement")
+        
       try:
         # print results
         row_count = cursor.rowcount

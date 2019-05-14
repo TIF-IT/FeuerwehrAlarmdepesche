@@ -11,6 +11,8 @@ class Api:
     def config(self):
         pass
 
+    def reset_db_connection(self):
+        pass
 
     def get_db_connection(self):
         return self.__core.get_db_connection()
