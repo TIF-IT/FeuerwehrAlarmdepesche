@@ -40,7 +40,8 @@ class DBModule(Api):
                     "Segment",
                     "PLZOrt",
                     "Region",
-                    "Geopositionen",
+                    "GeoLat",
+                    "GeoLong",
                     "Info"]
       trans      = ["Transportziel",
                     "Objekt",
@@ -49,7 +50,8 @@ class DBModule(Api):
                     "Segment",
                     "Region",
                     "Info",
-                    "Geopositionen",
+                    "GeoLat",
+                    "GeoLong",
                     "PLZOrt"]
       combined   = { names_list[0] : default,
                      names_list[1] : target,

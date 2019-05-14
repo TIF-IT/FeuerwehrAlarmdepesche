@@ -14,6 +14,7 @@ import Alarmdepesche.alarmdepescheconfig as config
 from bs4 import BeautifulSoup
 import MySQLdb
 import time
+import re
 
 
 availableAlarmdepescheDefault = { 'Einsatzstichwort':'Einsatzstichwort'
@@ -35,7 +36,7 @@ availableAlarmdepescheOperationTarget = { 'Objekt':'Objekt:'
                                         , 'PLZOrt':'PLZ'
                                         , 'Region':'Region'
                                         , 'Info':'Info'
-                                        , 'Geopositionen':'Geopositionen'
+                                        #, 'Geopositionen':'Geopositionen'
                                         }
 #  Transportziel
 availableAlarmdepescheTransportTarget = { 'Transportziel':'Transportziel'
@@ -46,7 +47,7 @@ availableAlarmdepescheTransportTarget = { 'Transportziel':'Transportziel'
                                         , 'PLZOrt':'PLZ'
                                         , 'Region':'Region'
                                         , 'Info':'Info'
-                                        , 'Geopositionen':'Geopositionen'
+                                        #, 'Geopositionen':'Geopositionen'
                                         }
 
 
@@ -100,12 +101,12 @@ class EmailModule(Api):
 
       rawMailBody = data[0][1].decode("utf-8")
       #rawMailBody = data[0][1]
-      print (rawMailBody)
+      #print (rawMailBody)
       f = FeedParser()
       f.feed(rawMailBody)
       rootMessage = f.close()
 
-      print ("rootMessage: "+str(rootMessage.get_payload(0)))
+      #print ("rootMessage: "+str(rootMessage.get_payload(0)))
 
       mailBody=rootMessage.get_payload(1).get_payload(decode=True)
 
@@ -147,6 +148,40 @@ class EmailModule(Api):
           for alarmdepItem in availableAlarmdepesche:
             if len(dataset) > 1 and availableAlarmdepesche[alarmdepItem] in dataset[0]:
               foundAlarmdepesche[identifier][alarmdepItem] = dataset[1].strip()
+
+      # Geo data
+      gli = htmlAlarmdepesche.find('geogr. Länge')
+      glstr = htmlAlarmdepesche[gli:gli+30]
+      gl = glstr.replace(",", ".").split(" ")
+      print (gl) 
+      try:
+        m = re.search('^([0-9\.]*).*', gl[2])
+        if m:
+          print ("Geoposition found")
+          foundAlarmdepesche["Einsatzziel"]["GeoLat"] = m.group(1)
+        else:
+          print ("Geoposition not found")
+          foundAlarmdepesche["Einsatzziel"]["GeoLat"] = ""
+        
+      except:
+        foundAlarmdepesche["Einsatzziel"]["GeoLat"] = ""
+
+      gli = htmlAlarmdepesche.find('geogr. Breite')
+      glstr = htmlAlarmdepesche[gli:gli+30]
+      gl = glstr.replace(",", ".").split(" ")
+      print (gl) 
+      try:
+        m = re.search('^([0-9\.]*).*', gl[2])
+        if m:
+          print ("Geoposition found")
+          foundAlarmdepesche["Einsatzziel"]["GeoLong"] = m.group(1)
+        else:
+          print ("Geoposition not found")
+          foundAlarmdepesche["Einsatzziel"]["GeoLong"] = ""
+        
+      except:
+        foundAlarmdepesche["Einsatzziel"]["GeoLong"] = ""
+
 
       print (foundAlarmdepesche)
 
