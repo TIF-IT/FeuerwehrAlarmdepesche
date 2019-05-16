@@ -84,9 +84,12 @@ class EmailModule(Api):
       #ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv3)
       #ctx = ssl.SSLContext(PROTOCOL_SSLv3)
       #passwd = getpass.getpass()
-      mail = imaplib.IMAP4_SSL(config.imap['host'], config.imap['port'])
-      mail.login(config.imap['user'], config.imap['passwd'])
-      mail.select(config.imap['mailBox'], 1)
+      try:
+        mail = imaplib.IMAP4_SSL(config.imap['host'], config.imap['port'])
+        mail.login(config.imap['user'], config.imap['passwd'])
+        mail.select(config.imap['mailBox'], 1)
+      except:
+        print ("!Error with mail connection")
 
       result, data = mail.search(None, "ALL")
 
@@ -153,34 +156,34 @@ class EmailModule(Api):
       gli = htmlAlarmdepesche.find('geogr. Länge')
       glstr = htmlAlarmdepesche[gli:gli+30]
       gl = glstr.replace(",", ".").split(" ")
-      print (gl) 
+      #print (gl) 
       try:
         m = re.search('^([0-9\.]*).*', gl[2])
         if m:
-          print ("Geoposition found")
-          foundAlarmdepesche["Einsatzziel"]["GeoLat"] = m.group(1)
-        else:
-          print ("Geoposition not found")
-          foundAlarmdepesche["Einsatzziel"]["GeoLat"] = ""
-        
-      except:
-        foundAlarmdepesche["Einsatzziel"]["GeoLat"] = ""
-
-      gli = htmlAlarmdepesche.find('geogr. Breite')
-      glstr = htmlAlarmdepesche[gli:gli+30]
-      gl = glstr.replace(",", ".").split(" ")
-      print (gl) 
-      try:
-        m = re.search('^([0-9\.]*).*', gl[2])
-        if m:
-          print ("Geoposition found")
+          #print ("Geoposition found")
           foundAlarmdepesche["Einsatzziel"]["GeoLong"] = m.group(1)
         else:
-          print ("Geoposition not found")
+          #print ("Geoposition not found")
           foundAlarmdepesche["Einsatzziel"]["GeoLong"] = ""
         
       except:
         foundAlarmdepesche["Einsatzziel"]["GeoLong"] = ""
+
+      gli = htmlAlarmdepesche.find('geogr. Breite')
+      glstr = htmlAlarmdepesche[gli:gli+30]
+      gl = glstr.replace(",", ".").split(" ")
+      #print (gl) 
+      try:
+        m = re.search('^([0-9\.]*).*', gl[2])
+        if m:
+          #print ("Geoposition found")
+          foundAlarmdepesche["Einsatzziel"]["GeoLat"] = m.group(1)
+        else:
+          #print ("Geoposition not found")
+          foundAlarmdepesche["Einsatzziel"]["GeoLat"] = ""
+        
+      except:
+        foundAlarmdepesche["Einsatzziel"]["GeoLat"] = ""
 
 
       print (foundAlarmdepesche)
