@@ -91,34 +91,38 @@ class EmailModule(Api):
       except:
         print ("!Error with mail connection")
 
-      result, data = mail.search(None, "ALL")
+      try:
+        result, data = mail.search(None, "ALL")
 
-      ids = data[0] # data is a list.
-      id_list = ids.split() # ids is a space separated string
-      if len(id_list) == 0:
+        ids = data[0] # data is a list.
+        id_list = ids.split() # ids is a space separated string
+        if len(id_list) == 0:
+          return (0, "")
+
+        latest_email_id = id_list[-1] # get the latest
+
+        result, data = mail.fetch(latest_email_id, "(RFC822)") # fetch the email body (RFC822) for the given ID
+
+        rawMailBody = data[0][1].decode("utf-8")
+        #rawMailBody = data[0][1]
+        #print (rawMailBody)
+        f = FeedParser()
+        f.feed(rawMailBody)
+        rootMessage = f.close()
+
+        #print ("rootMessage: "+str(rootMessage.get_payload(0)))
+
+        mailBody=rootMessage.get_payload(1).get_payload(decode=True)
+
+        mail.close()
+        mail.logout()
+        del mail
+
+        return (latest_email_id, mailBody.decode("utf-8"))
+        #return (latest_email_id, mailBody.decode("utf-16"))
+      except:
+        print ("!Error with mail select")
         return (0, "")
-
-      latest_email_id = id_list[-1] # get the latest
-
-      result, data = mail.fetch(latest_email_id, "(RFC822)") # fetch the email body (RFC822) for the given ID
-
-      rawMailBody = data[0][1].decode("utf-8")
-      #rawMailBody = data[0][1]
-      #print (rawMailBody)
-      f = FeedParser()
-      f.feed(rawMailBody)
-      rootMessage = f.close()
-
-      #print ("rootMessage: "+str(rootMessage.get_payload(0)))
-
-      mailBody=rootMessage.get_payload(1).get_payload(decode=True)
-
-      mail.close()
-      mail.logout()
-      del mail
-
-      return (latest_email_id, mailBody.decode("utf-8"))
-      #return (latest_email_id, mailBody.decode("utf-16"))
 
 
     def interpretHTMLAlarmdepesche(self, htmlAlarmdepesche):
