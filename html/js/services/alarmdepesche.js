@@ -10,8 +10,12 @@ app.service('getAlarmdepesche',function() {
          $scope.dicAlarmdepesche = response;
          //console.log('OK');
          $scope.refreshing = true;
-         $scope.initOpenStreetmap();
-       })
+         if ( $scope.transportGPSLat != response.Target.GeoLat && $scope.transportGPSLong != response.Target.GeoLong ) {
+          $scope.transportGPSLat = response.Target.GeoLat;
+          $scope.transportGPSLong = response.Target.GeoLong;
+          $scope.initOpenStreetmap();
+        }
+      })
        .error(function(response) {
          //console.log('Error getting station data');
          $scope.refreshing = false;

@@ -24,7 +24,8 @@ app.controller('Alarmdepesche',function($scope,$http,$interval,getAlarmdepesche)
 
     $scope.initOpenStreetmap = function () {
       
-
+      divMap = document.getElementById('Map');
+      divMap.innerHTML = "";
       map = new OpenLayers.Map("Map");
       
       var lat = $scope.dicAlarmdepesche.Target.GeoLat;
