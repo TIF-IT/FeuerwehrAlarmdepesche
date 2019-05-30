@@ -29,7 +29,8 @@ class Api:
 
 class ModuleRegistry:
     _objs = []
-
+    # [(extensionTyp,extensionFunction)] 
+    _extensions = [] 
 
     def register(c):
         try:
@@ -43,5 +44,15 @@ class ModuleRegistry:
     def get_objects():
         return ModuleRegistry._objs
 
+    def callExtensionPoints(extensionTyp, obj):
+        extensionObject = obj
+        for (extensionTyp, extensionFunction) in ModuleRegistry._extensions:
+            if extensionTyp == extensionTyp:
+              print ("Call extension point for typ "+extensionTyp)
+              extensionObject = extensionFunction(extensionObject)
+        return extensionObject
+
+    def registerExtensionPoint(extensionTyp, extensionFunction):
+        ModuleRegistry._extensions.append((extensionTyp, extensionFunction))
 
 

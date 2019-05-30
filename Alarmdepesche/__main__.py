@@ -6,6 +6,9 @@ from Alarmdepesche.modules.email import email_module
 from Alarmdepesche.modules.html import html_module
 from Alarmdepesche.modules.database import database_module
 
+# Extensions
+from Alarmdepesche.modules.email import sample_email_extension_module
+
 from waiting import wait
 
 
