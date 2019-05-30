@@ -37,7 +37,7 @@ class HtmlModule(Api):
 #        db = self.get_db_connection()
         cursor = db.cursor(cursorclass=MySQLdb.cursors.DictCursor)
         try:
-            sqlStatement = "select id, dbIN, messageID, Patientenname, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Sachverhalt, Auftragsnummer, Einsatzbeginn, Einsatznummer, Target_Objekt, Target_Objekttyp, Target_StrasseHausnummer, Target_Segment, Target_Region, Target_Geopositionen, Target_PLZOrt, Target_Region, Target_Info, Name, Zusatz, TransTarget_Transportziel, TransTarget_Objekt, TransTarget_Objekttyp, TransTarget_StrasseHausnummer, TransTarget_PLZOrt, TransTarget_Segment, TransTarget_Region, TransTarget_Info, TransTarget_Geopositionen from Alarmdepesche order by id desc limit 1";
+            sqlStatement = "select id, dbIN, messageID, Patientenname, Einsatzstichwort, AlarmiertesEinsatzmittel, Sondersignal, Sachverhalt, Auftragsnummer, Einsatzbeginn, Einsatznummer, Target_Objekt, Target_Objekttyp, Target_StrasseHausnummer, Target_Segment, Target_Region, Target_GeoLat, Target_GeoLong, Target_PLZOrt, Target_Region, Target_Info, Name, Zusatz, TransTarget_Transportziel, TransTarget_Objekt, TransTarget_Objekttyp, TransTarget_StrasseHausnummer, TransTarget_PLZOrt, TransTarget_Segment, TransTarget_Region, TransTarget_Info, TransTarget_GeoLat, TransTarget_GeoLong from Alarmdepesche order by id desc limit 1";
             cursor.execute(sqlStatement)
             result = cursor.fetchone()
             db.close()
@@ -73,7 +73,8 @@ class HtmlModule(Api):
                                      , 'PLZOrt' : self.strEncode(result['Target_PLZOrt'])
                                      , 'Region' : self.strEncode(result['Target_Region'])
                                      , 'Info' : self.strEncode(result['Target_Info'])
-                                     , 'Geopositionen' : self.strEncode(result['Target_Geopositionen'])
+                                     , 'GeoLat' : self.strEncode(result['Target_GeoLat'])
+                                     , 'GeoLong' : self.strEncode(result['Target_GeoLong'])
                                      }
                         , 'TransportTarget' : { 'Transportziel' : self.strEncode(result['TransTarget_Transportziel'])
                                               , 'Objekt' : self.strEncode(result['TransTarget_Objekt'])
@@ -83,7 +84,8 @@ class HtmlModule(Api):
                                               , 'Region' : self.strEncode(result['TransTarget_Region'])
                                               , 'Info' : self.strEncode(result['TransTarget_Info'])
                                               , 'Segment' : self.strEncode(result['TransTarget_Segment'])
-                                              , 'Geopositionen' : self.strEncode(result['TransTarget_Geopositionen'])
+                                              , 'GeoLat' : self.strEncode(result['TransTarget_GeoLat'])
+                                              , 'GeoLong' : self.strEncode(result['TransTarget_GeoLong'])
                                               }
                         }
 
