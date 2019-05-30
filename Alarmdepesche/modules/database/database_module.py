@@ -98,7 +98,8 @@ class DBModule(Api):
           print ("Found new Alarmdepesche")
           # print (sqlAlarmdepesche) #.decode('utf-8', 'ignore'))
           cursor.execute(sqlAlarmdepesche)
-          self.db.commit()
+          self.db.autocommit(True)
+          ModuleRegistry.callExtensionPoints("DATABASE_NEWDEPESCHE_ISINSERT", "")
         else:
           print ("The Alarmdepesche is already existing")
       except Exception as e:  # TODO: catch only DB exception

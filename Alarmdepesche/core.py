@@ -2,15 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from Alarmdepesche.registry import ModuleRegistry
-import imaplib
-import socket
-try:
-  from HTMLParser import HTMLParser
-except ModuleNotFoundError as e:
-  from html.parser import HTMLParser
-from email.parser import FeedParser
 import Alarmdepesche.alarmdepescheconfig as config
-from bs4 import BeautifulSoup
 import MySQLdb
 import time
 import _thread

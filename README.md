@@ -1,7 +1,7 @@
 
 # Description
 
-  In this project i write a interpreter for the Alarmdepesche of german fire departments like Thuringia.
+  In this project we write a interpreter for the Alarmdepesche of german fire departments like Thuringia.
 
 # Installation
 
@@ -85,6 +85,10 @@
 
      $ rsync -avz ./html/* /var/www/html/Alarmdepesche/
 
+# Write own modules
+
+For write own modules or extend code read the document ApiDescription.md
+
 # Docker
 
      $ docker build -t feuerwehr-alarmdepesche .
@@ -122,3 +126,7 @@ or
 
   - wget http://dev.openlayers.org/examples/osm-marker-popup.js
   - wget https://github.com/openlayers/ol2/releases/download/release-2.13.1/OpenLayers-2.13.1.tar.gz
+
+
+
+

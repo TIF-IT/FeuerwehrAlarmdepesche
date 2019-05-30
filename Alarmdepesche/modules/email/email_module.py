@@ -63,14 +63,13 @@ class EmailModule(Api):
 
 
     def runCheckup(self):
-        #print ("Check for mail")
-        lastMailID, mailBody = self.getLastMail()
+      #print ("Check for mail")
+      lastMailID, mailBody = self.getLastMail()
 
-        #print ("MailBody: " + mailBody)
-        if lastMailID != 0:
-            dicAlarmdepesche = self.interpretHTMLAlarmdepesche(mailBody)
-            self.new_alarm(lastMailID, dicAlarmdepesche)
-
+      #print ("MailBody: " + mailBody)
+      if lastMailID != 0:
+          dicAlarmdepesche = self.interpretHTMLAlarmdepesche(mailBody)
+          self.new_alarm(lastMailID, dicAlarmdepesche)
 
     def getDummyMailBody(self):
       file = open("vorlagen/Steinbachhallenberg.html", "r", encoding='utf-8')
@@ -142,6 +141,8 @@ class EmailModule(Api):
               foundAlarmdepesche[identifier][alarmdepItem] = dataset[1].strip()
 
       print (foundAlarmdepesche)
+
+      (htmlAlarmdepesche, foundAlarmdepesche) = ModuleRegistry.callExtensionPoints("HTML_INTERPRETED", (htmlAlarmdepesche, foundAlarmdepesche))
 
       return foundAlarmdepesche
 
