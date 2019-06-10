@@ -13,7 +13,7 @@ class Core:
         self.on_input_list = []
         self.on_output_list = []
         try:
-            self.db = MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
+            self.db = this.connectDB(self)
         except Exception as e:
             print(e)
             raise Exception("Error at connecting to database")
@@ -34,8 +34,14 @@ class Core:
         print('register input for %s' % f)
         self.on_input_list.append(f)
 
+    def connectDB(self):
+        return MySQLdb.connect(config.mysql['host'], config.mysql['user'], config.mysql['passwd'], config.mysql['dbName'] )
 
     def get_db_connection(self):
+        # o check if connected
+        self.db.close()
+        self.db  = this.connectDB(self)
+        # o otherwise reconnect
         return self.db
 
 
