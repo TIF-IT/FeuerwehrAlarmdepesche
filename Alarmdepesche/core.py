@@ -13,7 +13,7 @@ class Core:
         self.on_input_list = []
         self.on_output_list = []
         try:
-            self.db = this.connectDB(self)
+            self.db = self.connectDB()
         except Exception as e:
             print(e)
             raise Exception("Error at connecting to database")
@@ -40,7 +40,7 @@ class Core:
     def get_db_connection(self):
         # o check if connected
         self.db.close()
-        self.db  = this.connectDB(self)
+        self.db  = self.connectDB()
         # o otherwise reconnect
         return self.db
 
